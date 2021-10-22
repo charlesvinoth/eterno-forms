@@ -1,0 +1,75 @@
+// It's highly recommended to change the default colors
+// to match your app's branding.
+
+$primary: #4849a1;
+$secondary: #ff7f5d;
+$accent: #73cec1;
+
+$dark: #1d1d1d;
+
+$positive: #21ba45;
+$negative: #c10015;
+$info: #31ccec;
+$warning: #f2c037;
+
+/* primary */
+
+$primary-1: #f6f6fa;
+$primary-2: #ededf6;
+$primary-3: #d1d2e8;
+$primary-4: #b6b6d9;
+$primary-5: #7f80bd;
+$primary-6: #4849a1;
+$primary-7: #414291;
+$primary-8: #363779;
+$primary-9: #2b2c61;
+$primary-10: #23244f;
+
+/* ... */
+
+/* secondary */
+
+$secondary-1: #fff9f7;
+$secondary-2: #fff2ef;
+$secondary-3: #ffdfd7;
+$secondary-4: #ffccbe;
+$secondary-5: #ffa58e;
+$secondary-6: #ff7f5d;
+$secondary-7: #e67254;
+$secondary-8: #bf5f46;
+$secondary-9: #994c38;
+$secondary-10: #7d3e2e;
+
+/* ... */
+
+/* tertiary */
+
+$tertiary-1: #f8fdfc;
+$tertiary-2: #f1faf9;
+$tertiary-3: #dcf3f0;
+$tertiary-4: #c7ebe6;
+$tertiary-5: #9dddd4;
+$tertiary-6: #73cec1;
+$tertiary-7: #68b9ae;
+$tertiary-8: #569b91;
+$tertiary-9: #457c74;
+$tertiary-10: #38655f;
+
+/* ... */
+
+/* gray */
+
+$gray-1: #fbfbfc;
+$gray-2: #f8f8fa;
+$gray-3: #ecedf2;
+$gray-4: #e1e1e9;
+$gray-5: #cbcbd9;
+$gray-6: #b4b5c9;
+$gray-7: #a2a3b5;
+$gray-8: #878897;
+$gray-9: #6c6d79;
+$gray-10: #585962;
+
+/* ... */
+
+@import "~quasar-variables-styl";
