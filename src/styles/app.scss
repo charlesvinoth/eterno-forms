@@ -1,0 +1,32 @@
+@import "./quasar.variables.scss";
+@import "./core/background-color.scss";
+@import "./core/border.scss";
+@import "./core/border-radius.scss";
+@import "./core/box-shadow.scss";
+@import "./core/form.scss";
+@import "./core/letter-spacing.scss";
+@import "./core/text-color.scss";
+@import "./core/tooltip.scss";
+@import "./core/typography.scss";
+
+body {
+  background-color: $gray-2;
+}
+
+*::-moz-selection {
+  background-color: $secondary;
+  color: white;
+}
+*::selection {
+  background-color: $secondary;
+  color: white;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.flip-list-move {
+  transition: transform 0.5s;
+}

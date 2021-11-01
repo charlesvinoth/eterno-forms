@@ -1,0 +1,152 @@
+// dark
+
+.tippy-box[data-theme~="dark"] {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: $gray-1;
+  background-color: $gray-8;
+}
+
+.tippy-box[data-theme~="dark"][data-placement^="top"] > .tippy-arrow::before {
+  border-top-color: $gray-8;
+}
+.tippy-box[data-theme~="dark"][data-placement^="bottom"]
+  > .tippy-arrow::before {
+  border-bottom-color: $gray-8;
+}
+.tippy-box[data-theme~="dark"][data-placement^="left"] > .tippy-arrow::before {
+  border-left-color: $gray-8;
+}
+.tippy-box[data-theme~="dark"][data-placement^="right"] > .tippy-arrow::before {
+  border-right-color: $gray-8;
+}
+
+// primary
+
+.tippy-box[data-theme~="primary"] {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  background-color: $primary;
+}
+
+.tippy-box[data-theme~="primary"][data-placement^="top"]
+  > .tippy-arrow::before {
+  border-top-color: $primary;
+}
+.tippy-box[data-theme~="primary"][data-placement^="bottom"]
+  > .tippy-arrow::before {
+  border-bottom-color: $primary;
+}
+.tippy-box[data-theme~="primary"][data-placement^="left"]
+  > .tippy-arrow::before {
+  border-left-color: $primary;
+}
+.tippy-box[data-theme~="primary"][data-placement^="right"]
+  > .tippy-arrow::before {
+  border-right-color: $primary;
+}
+
+// tertiary
+
+.tippy-box[data-theme~="tertiary"] {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  background-color: $tertiary;
+}
+
+.tippy-box[data-theme~="tertiary"][data-placement^="top"]
+  > .tippy-arrow::before {
+  border-top-color: $tertiary;
+}
+.tippy-box[data-theme~="tertiary"][data-placement^="bottom"]
+  > .tippy-arrow::before {
+  border-bottom-color: $tertiary;
+}
+.tippy-box[data-theme~="tertiary"][data-placement^="left"]
+  > .tippy-arrow::before {
+  border-left-color: $tertiary;
+}
+.tippy-box[data-theme~="tertiary"][data-placement^="right"]
+  > .tippy-arrow::before {
+  border-right-color: $tertiary;
+}
+
+// secondary
+
+.tippy-box[data-theme~="secondary"] {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  background-color: $secondary;
+}
+
+.tippy-box[data-theme~="secondary"][data-placement^="top"]
+  > .tippy-arrow::before {
+  border-top-color: $secondary;
+}
+.tippy-box[data-theme~="secondary"][data-placement^="bottom"]
+  > .tippy-arrow::before {
+  border-bottom-color: $secondary;
+}
+.tippy-box[data-theme~="secondary"][data-placement^="left"]
+  > .tippy-arrow::before {
+  border-left-color: $secondary;
+}
+.tippy-box[data-theme~="secondary"][data-placement^="right"]
+  > .tippy-arrow::before {
+  border-right-color: $secondary;
+}
+
+// red
+
+.tippy-box[data-theme~="red"] {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  background-color: $red;
+}
+
+.tippy-box[data-theme~="red"][data-placement^="top"] > .tippy-arrow::before {
+  border-top-color: $red;
+}
+.tippy-box[data-theme~="red"][data-placement^="bottom"] > .tippy-arrow::before {
+  border-bottom-color: $red;
+}
+.tippy-box[data-theme~="red"][data-placement^="left"] > .tippy-arrow::before {
+  border-left-color: $red;
+}
+.tippy-box[data-theme~="red"][data-placement^="right"] > .tippy-arrow::before {
+  border-right-color: $red;
+}
+
+// green
+
+.tippy-box[data-theme~="green"] {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  background-color: $green;
+}
+
+.tippy-box[data-theme~="green"][data-placement^="top"] > .tippy-arrow::before {
+  border-top-color: $green;
+}
+.tippy-box[data-theme~="green"][data-placement^="bottom"]
+  > .tippy-arrow::before {
+  border-bottom-color: $green;
+}
+.tippy-box[data-theme~="green"][data-placement^="left"] > .tippy-arrow::before {
+  border-left-color: $green;
+}
+.tippy-box[data-theme~="green"][data-placement^="right"]
+  > .tippy-arrow::before {
+  border-right-color: $green;
+}

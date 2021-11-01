@@ -1,0 +1,77 @@
+// border
+
+.border {
+  border: 1px solid !important;
+  border-color: inherit !important;
+}
+
+.border-left {
+  border-left: 1px solid !important;
+  border-left-color: inherit !important;
+}
+
+.border-right {
+  border-right: 1px solid !important;
+  border-right-color: inherit !important;
+}
+
+.border-top {
+  border-top: 1px solid !important;
+  border-top-color: inherit !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid !important;
+  border-bottom-color: inherit !important;
+}
+
+.border-dashed {
+  border: 1px dashed !important;
+  border-color: inherit !important;
+}
+
+// red
+
+.border-red {
+  border-color: $red !important;
+}
+
+// primary
+
+.border-primary {
+  border-color: $primary !important;
+}
+
+// secondary
+
+.border-secondary {
+  border-color: $secondary !important;
+}
+
+// tertiary
+
+.border-tertiary {
+  border-color: $tertiary !important;
+}
+
+// gray
+
+.border-gray {
+  border-color: $gray !important;
+}
+
+.border-gray-4 {
+  border-color: $gray-4 !important;
+}
+
+.border-gray-3 {
+  border-color: $gray-3 !important;
+}
+
+.border-gray-2 {
+  border-color: $gray-2 !important;
+}
+
+.border-gray-1 {
+  border-color: $gray-1 !important;
+}

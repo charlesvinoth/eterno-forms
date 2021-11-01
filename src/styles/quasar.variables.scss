@@ -1,12 +1,5 @@
-// It's highly recommended to change the default colors
-// to match your app's branding.
-
-$primary: #4849a1;
-$secondary: #ff7f5d;
 $accent: #73cec1;
-
 $dark: #1d1d1d;
-
 $positive: #21ba45;
 $negative: #c10015;
 $info: #31ccec;
@@ -14,35 +7,41 @@ $warning: #f2c037;
 
 /* primary */
 
-$primary-1: #f6f6fa;
-$primary-2: #ededf6;
-$primary-3: #d1d2e8;
-$primary-4: #b6b6d9;
-$primary-5: #7f80bd;
-$primary-6: #4849a1;
-$primary-7: #414291;
-$primary-8: #363779;
-$primary-9: #2b2c61;
-$primary-10: #23244f;
+$primary: #4849a1;
+
+$primary-1: #e9eaf5;
+$primary-2: #c7cae6;
+$primary-3: #a3a8d5;
+$primary-4: #8086c4;
+$primary-5: #666bb7;
+$primary-6: #4e51ab;
+$primary-7: #4849a1;
+$primary-8: #404095;
+$primary-9: #383689;
+$primary-10: #2c2473;
 
 /* ... */
 
 /* secondary */
 
-$secondary-1: #fff9f7;
-$secondary-2: #fff2ef;
-$secondary-3: #ffdfd7;
-$secondary-4: #ffccbe;
-$secondary-5: #ffa58e;
-$secondary-6: #ff7f5d;
-$secondary-7: #e67254;
-$secondary-8: #bf5f46;
-$secondary-9: #994c38;
-$secondary-10: #7d3e2e;
+$secondary: #ff7f5d;
+
+$secondary-1: #fbe8e6;
+$secondary-2: #ffc8b8;
+$secondary-3: #ffa58b;
+$secondary-4: #ff805d;
+$secondary-5: #ff6339;
+$secondary-6: #fd4516;
+$secondary-7: #f23f12;
+$secondary-8: #e5380d;
+$secondary-9: #d63108;
+$secondary-10: #bd2300;
 
 /* ... */
 
 /* tertiary */
+
+$tertiary: #73cec1;
 
 $tertiary-1: #f8fdfc;
 $tertiary-2: #f1faf9;
@@ -59,16 +58,18 @@ $tertiary-10: #38655f;
 
 /* gray */
 
-$gray-1: #fbfbfc;
-$gray-2: #f8f8fa;
-$gray-3: #ecedf2;
-$gray-4: #e1e1e9;
-$gray-5: #cbcbd9;
-$gray-6: #b4b5c9;
-$gray-7: #a2a3b5;
-$gray-8: #878897;
-$gray-9: #6c6d79;
-$gray-10: #585962;
+$gray: #64748b;
+
+$gray-1: #f8fafc;
+$gray-2: #f1f5f9;
+$gray-3: #e2e8f0;
+$gray-4: #cbd5e1;
+$gray-5: #94a3b8;
+$gray-6: #64748b;
+$gray-7: #475569;
+$gray-8: #334155;
+$gray-9: #1e293b;
+$gray-10: #0f172a;
 
 /* ... */
 

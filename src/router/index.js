@@ -8,7 +8,7 @@ const routes = [
     path: "/",
     name: "forms",
     component: () =>
-      import(/* webpackChunkName: "forms" */ "@/views/Forms.vue"),
+      import(/* webpackChunkName: "forms" */ "@/views/forms/Forms.vue"),
   },
 ];
 
