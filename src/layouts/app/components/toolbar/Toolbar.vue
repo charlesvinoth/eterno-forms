@@ -1,5 +1,5 @@
 <template>
-  <q-header class="bg-white">
+  <q-header class="bg-white border-bottom border-gray-2">
     <q-toolbar class="no-padding" style="height: 56px">
       <!-- logo -->
 

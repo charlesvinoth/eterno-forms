@@ -1,25 +1,20 @@
 <template>
-  <BaseButton
-    is-flat
-    no-caps
-    color="gray"
-    label="Sort"
-    icon-left="mdi-sort"
-    icon-right="eva-chevron-down"
-    class="bg-gray-3"
-  >
+  <Action icon="mdi-sort" label="sort" iconRight="eva-chevron-down">
     <Menu>
-      <MenuItem
-        v-for="option in options"
-        :key="option"
-        :label="option"
-        :icon="
-          sortBy === option ? 'eva-checkmark-circle-2' : 'eva-radio-button-off'
-        "
-        :icon-color="sortBy === option ? 'secondary' : 'gray-4'"
-        @click="onOptionClick(option)"
-      >
-      </MenuItem>
+      <BaseScrollbar :height="scrollbarHeight" width="240px">
+        <MenuItem
+          v-for="option in options"
+          :key="option.id"
+          :label="option.label"
+          :icon="
+            sortBy === option.value
+              ? 'eva-checkmark-circle-2'
+              : 'eva-radio-button-off'
+          "
+          :icon-color="sortBy === option.value ? 'secondary' : 'gray-4'"
+          @click="setSortBy(option.value)"
+        ></MenuItem>
+      </BaseScrollbar>
 
       <q-separator inset color="gray-2" class="q-my-xs" />
 
@@ -28,35 +23,73 @@
         :icon="
           sortOrder === 'DESC' ? 'eva-checkmark-square-2' : 'eva-square-outline'
         "
-        :icon-color="sortOrder === 'DESC' ? 'tertiary' : 'gray-4'"
-        @click="toggleSortOrder"
+        :icon-color="sortOrder === 'DESC' ? 'deep-orange' : 'gray-4'"
+        @click="setSortOrder"
       ></MenuItem>
     </Menu>
-  </BaseButton>
+  </Action>
 </template>
 
 <script>
 import Menu from "@/components/common/menu/Menu.vue";
 import MenuItem from "@/components/common/menu/MenuItem.vue";
 
-export default {
-  name: "SortBy",
+import Action from "@/components/common/Action.vue";
 
-  components: { Menu, MenuItem },
+export default {
+  name: "Sort",
+
+  components: { Action, Menu, MenuItem },
 
   data() {
     return {
       options: [
-        "None",
-        "Name",
-        "Description",
-        "Status",
-        "Submissions",
-        "Last Modified",
+        {
+          id: this.$nano.id(),
+          label: "None",
+          value: "none",
+        },
+        {
+          id: this.$nano.id(),
+          label: "Name",
+          value: "name",
+        },
+        {
+          id: this.$nano.id(),
+          label: "Description",
+          value: "description",
+        },
+        {
+          id: this.$nano.id(),
+          label: "Status",
+          value: "status",
+        },
+        {
+          id: this.$nano.id(),
+          label: "Favorites",
+          value: "isFavorite",
+        },
+        {
+          id: this.$nano.id(),
+          label: "Submissions",
+          value: "submissions",
+        },
+        {
+          id: this.$nano.id(),
+          label: "Last Modified",
+          value: "lastModified",
+        },
       ],
-      sortBy: "None",
+      sortBy: "none",
       sortOrder: "ASC",
     };
+  },
+
+  computed: {
+    scrollbarHeight() {
+      const height = this.options.length * 40;
+      return height > 240 ? "240px" : `${height}px`;
+    },
   },
 
   methods: {
@@ -67,12 +100,12 @@ export default {
       });
     },
 
-    onOptionClick(option) {
+    setSortBy(option) {
       this.sortBy = option;
       this.emit();
     },
 
-    toggleSortOrder() {
+    setSortOrder() {
       this.sortOrder = this.sortOrder === "ASC" ? "DESC" : "ASC";
       this.emit();
     },

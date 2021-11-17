@@ -7,7 +7,7 @@
   >
     <!-- field label -->
 
-    <FormFieldLabel :is-mandatory="isMandatory" :tooltip="tooltip">
+    <FormFieldLabel v-if="label" :is-mandatory="isMandatory" :tooltip="tooltip">
       {{ label }}
     </FormFieldLabel>
 
@@ -109,7 +109,7 @@ import FormFieldLabel from "./FormFieldLabel.vue";
 import FormFieldError from "./FormFieldError.vue";
 
 export default {
-  name: "OptionField",
+  name: "OptionsField",
 
   components: {
     FormFieldLabel,
@@ -119,7 +119,7 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
+      default: "",
     },
 
     isMandatory: {

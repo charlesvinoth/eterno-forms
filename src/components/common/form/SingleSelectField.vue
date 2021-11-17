@@ -7,7 +7,7 @@
   >
     <!-- field label -->
 
-    <FormFieldLabel :is-mandatory="isMandatory" :tooltip="tooltip">
+    <FormFieldLabel v-if="label" :is-mandatory="isMandatory" :tooltip="tooltip">
       {{ label }}
     </FormFieldLabel>
 
@@ -21,7 +21,9 @@
       :is-clearable="isClearable"
       :has-error="hasError"
       has-action
+      class="cursor-pointer"
       @clear="onClear"
+      @click="toggleOptionPicker"
     >
       <template #default>
         <div
@@ -29,7 +31,7 @@
           class="select-field"
           @focus="isFocused = true"
           @blur="isFocused = false"
-          @click="toggleOptionPicker"
+          @click.stop="toggleOptionPicker"
           @keypress.space.stop="toggleOptionPicker"
         >
           {{ selectedOption.label }}
@@ -90,7 +92,7 @@ import FormFieldError from "./FormFieldError.vue";
 import OptionsPicker from "./OptionsPicker";
 
 export default {
-  name: "SelectField",
+  name: "SingleSelectField",
 
   components: {
     FormFieldLabel,
@@ -102,7 +104,7 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
+      default: "",
     },
 
     isMandatory: {
@@ -154,6 +156,11 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    hideClearBtn: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -172,6 +179,7 @@ export default {
     },
 
     isClearable() {
+      if (this.hideClearBtn) return false;
       if (this.isDisabled) return false;
       if (this.isReadonly) return false;
       return Boolean(this.value);
@@ -272,7 +280,6 @@ export default {
   font-weight: 500;
   font-size: 13px;
   padding: 4px;
-  height: 34px;
   display: flex;
   align-items: center;
   outline: none;

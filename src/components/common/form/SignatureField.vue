@@ -7,7 +7,7 @@
   >
     <!-- field label -->
 
-    <FormFieldLabel :is-mandatory="isMandatory" :tooltip="tooltip">
+    <FormFieldLabel v-if="label" :is-mandatory="isMandatory" :tooltip="tooltip">
       {{ label }}
     </FormFieldLabel>
 
@@ -128,11 +128,10 @@
 <script>
 import { lowerCase } from "lodash-es";
 
-import ImageCropper from "@/components/common/ImageCropper.vue";
-import SignaturePad from "@/components/common/SignaturePad.vue";
-
 import FormFieldLabel from "./FormFieldLabel.vue";
 import FormFieldError from "./FormFieldError.vue";
+import ImageCropper from "./ImageCropper.vue";
+import SignaturePad from "./SignaturePad.vue";
 
 export default {
   name: "SignatureField",
@@ -147,7 +146,7 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
+      default: "",
     },
 
     isMandatory: {

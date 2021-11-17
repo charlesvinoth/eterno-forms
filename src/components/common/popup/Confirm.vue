@@ -74,7 +74,7 @@ export default {
 .modal {
   background-color: white;
   border-radius: 4px;
-  width: 320px;
+  width: 360px;
   padding: 16px;
 
   .header {
@@ -94,14 +94,14 @@ export default {
     }
 
     .title {
-      color: $gray-8;
+      color: $gray-10;
       font-size: 14px;
       font-weight: bold;
     }
   }
 
   .description {
-    color: $gray-6;
+    color: $gray;
     font-size: 12px;
   }
 

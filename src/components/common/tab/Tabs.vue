@@ -3,14 +3,15 @@
     <!-- tabs -->
 
     <Tab
-      v-for="(tab, index) in tabs"
+      v-for="tab in tabs"
       ref="tab"
       :key="tab.id"
       :icon="tab.icon"
       :label="tab.label"
+      :count="tab.count"
       :color="color"
-      :is-active="value.id === tab.id"
-      @click="setActiveTab(index)"
+      :is-active="value === tab.value"
+      @click="setActiveTab(tab)"
     ></Tab>
 
     <!-- ... -->
@@ -33,8 +34,8 @@ export default {
 
   props: {
     value: {
-      type: Object,
-      required: true,
+      type: String,
+      default: "",
     },
 
     tabs: {
@@ -46,11 +47,6 @@ export default {
       type: String,
       default: "primary",
     },
-
-    isRouteTabs: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   computed: {
@@ -60,19 +56,16 @@ export default {
   },
 
   mounted() {
-    if (this.isRouteTabs) {
-      const tabIdx = this.tabs.findIndex(
-        (tab) => tab.route === this.$route.name
-      );
-      this.setActiveTab(tabIdx === -1 ? 0 : tabIdx);
-    } else {
-      const tabIdx = this.tabs.findIndex((tab) => tab.id === this.value.id);
-      this.setActiveTab(tabIdx === -1 ? 0 : tabIdx);
-    }
+    const currentTab = this.value || this.tabs[0].value;
+    const tab = this.tabs.find((tab) => tab.value === currentTab);
+    this.setActiveTab(tab);
   },
 
   methods: {
-    setIndicatorData(target) {
+    setIndicatorData(tabId) {
+      const tabIdx = this.tabs.findIndex((tab) => tab.id === tabId);
+      const target = this.$refs.tab[tabIdx];
+
       const left = target.$el.offsetLeft;
       this.$refs.indicator.style.left = `${left}px`;
 
@@ -80,9 +73,9 @@ export default {
       this.$refs.indicator.style.width = `${width}px`;
     },
 
-    setActiveTab(tabIdx) {
-      this.$emit("input", this.tabs[tabIdx]);
-      this.setIndicatorData(this.$refs.tab[tabIdx]);
+    setActiveTab(tab) {
+      this.$emit("input", tab.value);
+      this.setIndicatorData(tab.id);
     },
   },
 };
@@ -93,16 +86,16 @@ export default {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  border-bottom: 1px solid $gray-2;
   position: relative;
 }
 
 .tab-indicator {
   position: absolute;
   bottom: -1.5px;
-  height: 3px;
+  width: 14px;
+  height: 2px;
   background-color: currentColor;
-  border-radius: 4px 4px 0px 0px;
+  border-radius: 2px;
   transition: all 0.3s ease;
 }
 </style>

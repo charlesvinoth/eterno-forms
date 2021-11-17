@@ -1,8 +1,13 @@
 <template>
-  <div>
+  <div
+    :class="{
+      'field-is-readonly': isReadonly,
+      'field-is-disabled': isDisabled,
+    }"
+  >
     <!-- field label -->
 
-    <FormFieldLabel :is-mandatory="isMandatory" :tooltip="tooltip">
+    <FormFieldLabel v-if="label" :is-mandatory="isMandatory" :tooltip="tooltip">
       {{ label }}
     </FormFieldLabel>
 
@@ -82,7 +87,7 @@ export default {
 
     label: {
       type: String,
-      required: true,
+      default: "",
     },
 
     tooltip: {
@@ -106,6 +111,16 @@ export default {
       validator(value) {
         return [0, 1, 2, 3, 4, 6].includes(value);
       },
+    },
+
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+
+    isReadonly: {
+      type: Boolean,
+      default: false,
     },
 
     error: {
@@ -200,12 +215,12 @@ export default {
   right: 0;
   background-color: $secondary;
   border-radius: 100% 0% 0% 100% / 0% 100% 0% 100%;
-}
 
-.option-check-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 4px;
+  .option-check-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 4px;
+  }
 }
 </style>

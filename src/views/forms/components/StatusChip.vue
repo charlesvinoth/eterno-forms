@@ -18,13 +18,13 @@ export default {
   computed: {
     color() {
       switch (this.status) {
-        case "PUBLISHED":
+        case "published":
           return "green";
-        case "DRAFTED":
+        case "draft":
           return "secondary";
-        case "ARCHIVED":
+        case "archive":
           return "cyan";
-        case "TRASHED":
+        case "trash":
           return "red";
         default:
           return "primary";

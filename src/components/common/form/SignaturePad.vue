@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import Modal from "@/components/common/Modal";
+import Modal from "@/components/common/popup/Modal.vue";
 
 export default {
   name: "ImageCropper",

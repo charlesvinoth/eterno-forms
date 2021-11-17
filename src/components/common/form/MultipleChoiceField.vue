@@ -7,7 +7,7 @@
   >
     <!-- field label -->
 
-    <FormFieldLabel :is-mandatory="isMandatory" :tooltip="tooltip">
+    <FormFieldLabel v-if="label" :is-mandatory="isMandatory" :tooltip="tooltip">
       {{ label }}
     </FormFieldLabel>
 
@@ -41,7 +41,7 @@
 
     <!-- no option -->
 
-    <div v-else class="no-option">no options found</div>
+    <div v-else class="no-option">Go to field settings to add options</div>
 
     <!-- ... -->
 
@@ -72,7 +72,7 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
+      default: "",
     },
 
     isMandatory: {

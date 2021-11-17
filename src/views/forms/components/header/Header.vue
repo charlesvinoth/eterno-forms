@@ -1,118 +1,139 @@
 <template>
   <div class="header">
-    <!-- row 1 -->
+    <!-- title -->
 
-    <div class="row-1">
-      <!-- title -->
-
-      <div class="q-mr-xl">
-        <div class="title">My Forms</div>
-        <div class="subtitle">You have 5 forms in total</div>
-      </div>
-
-      <!-- ... -->
-
-      <q-space />
-
-      <template v-if="selectedForms.length">
-        <div class="actions">
-          <div v-ripple:white class="action">
-            <q-icon name="mdi-table-eye" size="20px" class="icon" />
-
-            <div class="label">submissions</div>
-          </div>
-
-          <q-separator vertical inset color="gray-2" class="q-mx-xs" />
-
-          <div v-ripple:white class="action">
-            <q-icon name="eva-edit" size="20px" class="icon" />
-
-            <div class="label">edit</div>
-          </div>
-
-          <q-separator vertical inset color="gray-2" class="q-mx-xs" />
-
-          <div v-ripple:white class="action">
-            <q-icon name="eva-trash-2" size="20px" class="icon" />
-
-            <div class="label">delete</div>
-          </div>
-
-          <q-separator vertical inset color="gray-2" class="q-mx-xs" />
-
-          <div v-ripple:white class="action">
-            <q-icon name="mdi-file-move" size="20px" class="icon" />
-
-            <div class="label q-mr-sm">move to</div>
-
-            <q-icon name="eva-chevron-down" size="20px" class="icon" />
-          </div>
-        </div>
-      </template>
-
-      <template v-else>
-        <!-- sort by -->
-
-        <SortBy class="q-mr-md" />
-
-        <!-- ... -->
-
-        <!-- view toggle -->
-
-        <ViewToggle
-          class="q-mx-md hidden"
-          @toggle="(view) => $emit('toggle-view', view)"
-        />
-
-        <!-- ... -->
-
-        <!-- new form -->
-
-        <BaseButton label="new form" icon-left="eva-plus-circle" />
-
-        <!-- ... -->
-      </template>
+    <div>
+      <div class="title">My Forms</div>
+      <div class="subtitle">You have {{ formCount }} forms in total</div>
     </div>
 
     <!-- ... -->
 
-    <!-- row 2 -->
+    <q-space />
 
-    <div class="row-2"></div>
+    <!-- ... -->
+
+    <template v-if="selectedForm.id">
+      <!-- submissions -->
+
+      <Submissions
+        v-if="['published', 'archive'].includes(selectedForm.status)"
+        class="q-mr-sm"
+      />
+
+      <!-- ... -->
+
+      <!-- share -->
+
+      <Share v-if="selectedForm.status === 'published'" class="q-mr-sm" />
+
+      <!-- ... -->
+
+      <!-- edit -->
+
+      <Edit class="q-mr-sm" />
+
+      <!-- ... -->
+
+      <!-- delete -->
+
+      <Delete class="q-mr-sm">
+        <template #title>Delete {{ selectedForm.name }}?</template>
+
+        <template #description>
+          <div class="q-mb-md">
+            Are you sure want to delete this Form? If you delete the form all
+            the data associated with it will also be deleted.
+          </div>
+
+          <div>
+            Don't worry, You can restore the deleted form anytime from the
+            Trash.
+          </div>
+        </template>
+      </Delete>
+
+      <!-- ... -->
+
+      <!-- move to -->
+
+      <MoveTo :selected-form="selectedForm" />
+
+      <!-- ... -->
+    </template>
+
+    <!-- ... -->
+
+    <template v-else>
+      <!-- search -->
+
+      <Search width="240px" class="q-mr-sm" @search="onSearch" />
+
+      <!-- ... -->
+
+      <!-- sort by -->
+
+      <Sort class="q-mr-sm" @sort="onSort" />
+
+      <!-- ... -->
+
+      <!-- new form -->
+
+      <BaseButton label="New Form" no-caps icon-left="eva-plus-circle" />
+
+      <!-- ... -->
+    </template>
 
     <!-- ... -->
   </div>
 </template>
 
 <script>
-import SortBy from "./components/Sort.vue";
-import ViewToggle from "./components/ViewToggle.vue";
+import Search from "./components/Search.vue";
+import Sort from "./components/Sort.vue";
+import Submissions from "./components/Submissions.vue";
+import Share from "./components/Share.vue";
+import Edit from "./components/Edit.vue";
+import Delete from "./components/Delete.vue";
+import MoveTo from "./components/MoveTo.vue";
 
 export default {
   name: "Header",
 
-  components: {
-    SortBy,
-    ViewToggle,
-  },
+  components: { Search, Sort, Submissions, Share, Edit, Delete, MoveTo },
 
   props: {
-    selectedForms: {
-      type: Array,
-      default: () => [],
+    formCount: {
+      type: Number,
+      required: true,
+    },
+
+    selectedForm: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  methods: {
+    onSort(sortBy) {
+      this.$emit("sort", sortBy);
+    },
+
+    onSearch(query) {
+      this.$emit("search", query);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.row-1 {
+.header {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
 
   .title {
-    color: $gray-8;
+    color: $gray-10;
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 2px;
@@ -121,51 +142,6 @@ export default {
   .subtitle {
     color: $gray;
     font-size: 12px;
-  }
-
-  .actions {
-    height: 36px;
-    display: flex;
-    align-items: center;
-    border-radius: 4px;
-    border: 1px solid $gray-2;
-    background-color: white;
-
-    .action {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      padding: 0px 10px;
-      position: relative;
-
-      .icon {
-        color: $gray;
-      }
-
-      .label {
-        color: $gray-8;
-        font-size: 13px;
-        font-weight: 500;
-        text-transform: capitalize;
-        margin-left: 8px;
-      }
-
-      &:hover {
-        cursor: pointer;
-        background-color: $tertiary;
-        border-radius: 4px;
-        box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.1),
-          0 1px 2px 0 rgba(15, 23, 42, 0.06) !important;
-
-        .icon {
-          color: white;
-        }
-
-        .label {
-          color: white;
-        }
-      }
-    }
   }
 }
 </style>

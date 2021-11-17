@@ -287,7 +287,6 @@ export default {
       }
 
       const hour = this.hour === "00" ? "12" : this.hour;
-      console.log(`${hour}:${this.minute} ${this.meridian}`);
       this.$emit("input", `${hour}:${this.minute} ${this.meridian}`);
     },
   },

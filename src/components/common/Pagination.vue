@@ -4,12 +4,12 @@
 
     <div class="informator">
       <span>Showing </span>
-      <span class="count">{{ itemFrom }}</span>
+      <span class="count">{{ totalItems ? itemFrom : 0 }}</span>
       <span> - </span>
       <span class="count">{{ itemTo }}</span>
       <span> of </span>
       <span class="count">{{ totalItems }}</span>
-      <span> {{ label }}</span>
+      <span class="text-capitalize"> {{ label }}</span>
     </div>
 
     <!-- ... -->
@@ -98,17 +98,29 @@ export default {
     },
 
     pages() {
-      return `${this.currentPage} / ${this.totalPages}`;
+      return this.totalItems ? `${this.currentPage} / ${this.totalPages}` : 0;
     },
   },
 
-  created() {
-    this.itemTo =
-      this.itemsPerPage > this.totalItems ? this.totalItems : this.itemsPerPage;
+  watch: {
+    totalItems: {
+      immediate: true,
+      handler() {
+        this.itemTo =
+          this.itemsPerPage > this.totalItems
+            ? this.totalItems
+            : this.itemsPerPage;
+      },
+    },
   },
 
   methods: {
     onKeypress() {
+      if (!this.totalItems) {
+        this.page = null;
+        return;
+      }
+
       if (this.page < 1) {
         this.goto(1);
       } else if (this.page > this.totalPages) {
@@ -158,15 +170,15 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
-  height: 52px;
   display: flex;
   align-items: center;
   user-select: none;
+  margin-top: 48px;
+  margin-bottom: 24px;
 
   .informator {
     font-size: 12px;
     color: $gray-6;
-    text-transform: capitalize;
 
     .count {
       font-weight: bold;
@@ -210,18 +222,22 @@ export default {
     height: 34px;
     width: 68px;
     border-radius: 4px;
-
     margin: 0px 8px;
 
     input {
       text-align: center;
       font-weight: bold;
       font-size: 12px;
-      color: $gray-10;
+      color: $gray-8;
       border: 1px solid $gray-3;
 
       &:focus {
-        border: 1px solid $secondary;
+        border: 1px solid $tertiary;
+      }
+
+      &::placeholder {
+        color: $gray-8;
+        font-weight: bold;
       }
     }
   }

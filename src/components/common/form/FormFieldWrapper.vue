@@ -1,5 +1,6 @@
 <template>
   <div
+    v-on="$listeners"
     class="form-field-wrapper"
     :class="{
       'field-has-error': hasError,

@@ -7,7 +7,7 @@
   >
     <!-- field label -->
 
-    <FormFieldLabel :is-mandatory="isMandatory" :tooltip="tooltip">
+    <FormFieldLabel v-if="label" :is-mandatory="isMandatory" :tooltip="tooltip">
       {{ label }}
     </FormFieldLabel>
 
@@ -21,13 +21,15 @@
       :has-error="hasError"
       @clear="onClear"
     >
-      <input
-        :value="value"
-        :type="type"
-        @input="onInput"
-        @focus="isFocused = true"
-        @blur="isFocused = false"
-      />
+      <div>
+        <input
+          :value="value"
+          :type="type"
+          @input="onInput"
+          @focus="isFocused = true"
+          @blur="isFocused = false"
+        />
+      </div>
     </FormFieldWrapper>
 
     <!-- ... -->
@@ -55,7 +57,7 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
+      default: "",
     },
 
     isMandatory: {

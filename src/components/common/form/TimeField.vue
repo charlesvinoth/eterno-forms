@@ -7,7 +7,7 @@
   >
     <!-- field label -->
 
-    <FormFieldLabel :is-mandatory="isMandatory" :tooltip="tooltip">
+    <FormFieldLabel v-if="label" :is-mandatory="isMandatory" :tooltip="tooltip">
       {{ label }}
     </FormFieldLabel>
 
@@ -117,7 +117,7 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
+      default: "",
     },
 
     isMandatory: {
@@ -207,7 +207,6 @@ export default {
   font-weight: 500;
   font-size: 13px;
   padding: 4px;
-  height: 34px;
   display: flex;
   align-items: center;
   outline: none;

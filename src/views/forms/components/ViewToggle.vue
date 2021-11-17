@@ -3,9 +3,8 @@
     <div
       v-for="view in views"
       :key="view.id"
-      v-tooltip:secondary.top="view.label"
       class="icon-wrapper"
-      :class="{ active: selectedView === view.value }"
+      :class="{ active: value === view.value }"
       @click="onViewClick(view.value)"
     >
       <q-icon :name="view.icon" size="20px" />
@@ -16,6 +15,13 @@
 <script>
 export default {
   name: "ViewToggle",
+
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+  },
 
   data() {
     return {
@@ -30,17 +36,15 @@ export default {
           id: this.$nano.id(),
           label: "List View",
           value: "LIST",
-          icon: "eva-list-outline",
+          icon: "eva-list",
         },
       ],
-      selectedView: "GRID",
     };
   },
 
   methods: {
     onViewClick(view) {
-      this.selectedView = view;
-      this.$emit("toggle", view);
+      this.$emit("input", view);
     },
   },
 };
@@ -49,20 +53,24 @@ export default {
 <style lang="scss" scoped>
 .view-toggle {
   padding: 4px;
-  background-color: $gray-3;
-  border-radius: 36px;
+  background-color: $gray-2;
+  border-radius: 4px;
   display: flex;
   align-items: center;
 
   .icon-wrapper {
-    height: 36px;
-    width: 36px;
+    height: 32px;
+    width: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 100%;
+    border-radius: 4px;
     color: $gray;
     cursor: pointer;
+
+    &:hover {
+      color: $secondary;
+    }
   }
 
   .active {

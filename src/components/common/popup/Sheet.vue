@@ -1,10 +1,10 @@
 <template>
-  <q-dialog :value="value" @input="onInput">
-    <div class="modal box-shadow-2xl">
-      <div class="modal-header">
-        <div class="modal-title">{{ title }}</div>
+  <q-dialog :value="value" position="right" maximized @input="onInput">
+    <div class="sheet box-shadow-2xl" :style="{ width }">
+      <div class="sheet-header">
+        <div class="sheet-title">{{ title }}</div>
 
-        <div class="modal-close-icon">
+        <div class="sheet-close-icon">
           <BaseIconButton
             is-flat
             is-dense
@@ -15,9 +15,11 @@
         </div>
       </div>
 
-      <slot name="default"></slot>
+      <BaseScrollbar :height="scrollBarHeight">
+        <slot name="default"></slot>
+      </BaseScrollbar>
 
-      <div v-if="hasFooter" class="modal-footer">
+      <div v-if="hasFooter" class="sheet-footer">
         <slot name="footer"></slot>
       </div>
     </div>
@@ -26,7 +28,7 @@
 
 <script>
 export default {
-  name: "Modal",
+  name: "Sheet",
 
   props: {
     value: {
@@ -43,6 +45,18 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    width: {
+      type: String,
+      default: "360px",
+    },
+  },
+
+  computed: {
+    scrollBarHeight() {
+      const negativeHeight = this.hasFooter ? 128 : 64;
+      return `calc(100vh - ${negativeHeight}px)`;
+    },
   },
 
   methods: {
@@ -58,31 +72,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal {
+.sheet {
   background-color: white;
   border-radius: 4px;
-  width: 480px;
+  height: 100vh;
 }
 
-.modal-header {
+.sheet-header {
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 0px 16px;
+  height: 64px;
   border-bottom: 1px solid $gray-2;
 }
 
-.modal-title {
-  font-weight: bold;
+.sheet-title {
   color: $gray-10;
+  font-size: 16px;
+  font-weight: 500;
   text-transform: capitalize;
   flex-grow: 1;
 }
 
-.modal-footer {
+.sheet-footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 16px;
+  padding: 0px 16px;
+  height: 64px;
   border-top: 1px solid $gray-2;
 }
 </style>

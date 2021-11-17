@@ -38,6 +38,10 @@ export default {
 <style lang="scss">
 @import "@/styles/quasar.variables.scss";
 
+.simplebar-content-wrapper {
+  outline: none;
+}
+
 .simplebar-scrollbar::before {
   top: 0 !important;
   right: 0 !important;

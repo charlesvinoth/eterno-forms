@@ -7,7 +7,7 @@
   >
     <!-- field label -->
 
-    <FormFieldLabel :is-mandatory="isMandatory" :tooltip="tooltip">
+    <FormFieldLabel v-if="label" :is-mandatory="isMandatory" :tooltip="tooltip">
       {{ label }}
     </FormFieldLabel>
 
@@ -121,10 +121,9 @@
 <script>
 import { lowerCase } from "lodash-es";
 
-import ImageCropper from "@/components/common/ImageCropper.vue";
-
 import FormFieldLabel from "./FormFieldLabel.vue";
 import FormFieldError from "./FormFieldError.vue";
+import ImageCropper from "./ImageCropper.vue";
 
 export default {
   name: "ImageField",
@@ -138,7 +137,7 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
+      default: "",
     },
 
     isMandatory: {

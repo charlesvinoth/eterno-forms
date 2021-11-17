@@ -7,24 +7,20 @@
     :mini-width="56"
   >
     <div class="menu-wrapper">
-      <template v-for="menu in menus">
-        <q-space v-if="menu.type === 'SPACE'" :key="menu.id" />
-
-        <div
-          v-else
-          :key="menu.id"
-          v-tooltip:primary.right="menu.label"
-          class="menu"
-          :class="{ active: activeMenu === menu.route }"
-          @click="activeMenu = menu.route"
-        >
-          <div v-if="activeMenu === menu.route" class="indicator"></div>
-          <q-icon
-            :name="activeMenu === menu.route ? menu.activeIcon : menu.icon"
-            size="20px"
-          />
-        </div>
-      </template>
+      <div
+        v-for="menu in menus"
+        :key="menu.id"
+        v-tooltip:primary.right="menu.label"
+        class="menu"
+        :class="{ active: activeMenu === menu.route }"
+        @click="onMenuClick(menu.route)"
+      >
+        <div v-if="activeMenu === menu.route" class="indicator"></div>
+        <q-icon
+          :name="activeMenu === menu.route ? menu.activeIcon : menu.icon"
+          size="20px"
+        />
+      </div>
     </div>
   </q-drawer>
 </template>
@@ -40,7 +36,6 @@ export default {
       menus: [
         {
           id: this.$nano.id(),
-          type: "MENU",
           label: "dashboard",
           route: "dashboard",
           icon: "mdi-view-dashboard-outline",
@@ -48,51 +43,36 @@ export default {
         },
         {
           id: this.$nano.id(),
-          type: "MENU",
-          label: "draft",
-          route: "draft",
-          icon: "mdi-text-box-outline",
-          activeIcon: "mdi-text-box",
+          label: "forms",
+          route: "forms",
+          icon: "eva-file-text-outline",
+          activeIcon: "eva-file-text",
         },
         {
           id: this.$nano.id(),
-          type: "MENU",
-          label: "favorite",
-          route: "favorite",
-          icon: "eva-star-outline",
-          activeIcon: "eva-star",
-        },
-        {
-          id: this.$nano.id(),
-          type: "MENU",
-          label: "archive",
-          route: "archive",
-          icon: "eva-archive-outline",
-          activeIcon: "eva-archive",
-        },
-        {
-          id: this.$nano.id(),
-          type: "MENU",
-          label: "trash",
-          route: "trash",
-          icon: "eva-trash-2-outline",
-          activeIcon: "eva-trash-2",
-        },
-        {
-          id: this.$nano.id(),
-          type: "SPACE",
-        },
-        {
-          id: this.$nano.id(),
-          type: "MENU",
           label: "help",
           route: "help",
           icon: "mdi-help-circle-outline",
           activeIcon: "mdi-help-circle",
         },
       ],
-      activeMenu: "draft",
+      activeMenu: "",
     };
+  },
+
+  watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.activeMenu = this.$route.name;
+      },
+    },
+  },
+
+  methods: {
+    onMenuClick(route) {
+      this.$router.push({ name: route });
+    },
   },
 };
 </script>
@@ -102,6 +82,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid $gray-2;
 
   .menu {
     height: 56px;

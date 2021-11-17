@@ -43,7 +43,10 @@
 
       <q-space />
 
-      <div>Last Modified: <span class="count">24 Oct 2021 03:15 PM</span></div>
+      <div>
+        Last Modified:
+        <span class="count">{{ $day.format(form.lastModified) }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -79,6 +82,7 @@ export default {
   display: flex;
   flex-direction: column;
   border: 1px solid $gray-2;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
   transition: all 0.3s ease;
 
   .name {
