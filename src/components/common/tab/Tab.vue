@@ -56,6 +56,7 @@ export default {
 .tab {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: nowrap;
   padding: 16px;
   user-select: none;

@@ -67,9 +67,6 @@ export default {
     totalItems: {
       type: Number,
       required: true,
-      validator(value) {
-        return value > 0;
-      },
     },
 
     label: {

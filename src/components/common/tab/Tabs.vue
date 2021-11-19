@@ -11,6 +11,7 @@
       :count="tab.count"
       :color="color"
       :is-active="value === tab.value"
+      :class="{ col: equalTabSize }"
       @click="setActiveTab(tab)"
     ></Tab>
 
@@ -47,6 +48,11 @@ export default {
       type: String,
       default: "primary",
     },
+
+    equalTabSize: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
@@ -56,9 +62,11 @@ export default {
   },
 
   mounted() {
-    const currentTab = this.value || this.tabs[0].value;
-    const tab = this.tabs.find((tab) => tab.value === currentTab);
-    this.setActiveTab(tab);
+    setTimeout(() => {
+      const currentTab = this.value || this.tabs[0].value;
+      const tab = this.tabs.find((tab) => tab.value === currentTab);
+      this.setActiveTab(tab);
+    }, 100);
   },
 
   methods: {

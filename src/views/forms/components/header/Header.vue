@@ -79,7 +79,12 @@
 
       <!-- new form -->
 
-      <BaseButton label="New Form" no-caps icon-left="eva-plus-circle" />
+      <BaseButton
+        label="New Form"
+        no-caps
+        icon-left="eva-plus-circle"
+        @click="newForm"
+      />
 
       <!-- ... -->
     </template>
@@ -121,6 +126,10 @@ export default {
 
     onSearch(query) {
       this.$emit("search", query);
+    },
+
+    newForm() {
+      this.$router.push({ name: "form-builder" });
     },
   },
 };
