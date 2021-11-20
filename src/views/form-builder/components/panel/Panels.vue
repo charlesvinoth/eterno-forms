@@ -1,7 +1,7 @@
 <template>
-  <div @click="clearSelection">
+  <div @click="deselectAll">
     <BaseScrollbar height="calc(100vh - 114px)" class="q-pa-lg">
-      <div class="wrapper" @click.self="clearSelection">
+      <div class="wrapper" @click.self="deselectAll">
         <!-- panels -->
 
         <div v-if="panels.length" class="panels-wrapper">
@@ -17,11 +17,12 @@
               type="transition"
               :name="draggingPanel ? null : 'flip-list'"
             >
-              <div
-                v-for="(panel, index) in panels"
-                :key="panel.id"
+              <Panel
+                v-for="panel in panels"
                 ref="panel"
-                class="panel"
+                :key="panel.id"
+                :data-id="panel.id"
+                :panel="panel"
                 :class="{
                   selected: selectedPanel.id === panel.id,
                   active: activePanel === panel.id,
@@ -29,46 +30,8 @@
                 @click.stop="selectPanel(panel)"
                 @dragover.prevent="dragOverPanel(panel.id)"
                 @dragleave="dragLeavePanel"
-                @drop="(e) => dropOnPanel(e, index)"
-              >
-                <!-- drag indicator -->
-
-                <div class="drag-icon">
-                  <q-icon name="drag_indicator" size="20px" color="gray-4" />
-                </div>
-
-                <!-- ... -->
-
-                <!-- header -->
-
-                <div class="q-mb-md q-px-sm">
-                  <div v-if="panel.title" class="title">{{ panel.title }}</div>
-                  <div v-if="panel.description" class="description">
-                    {{ panel.description }}
-                  </div>
-                </div>
-
-                <!-- ... -->
-
-                <!-- fields -->
-
-                <Fields
-                  v-model="panel.fields"
-                  ref="fields"
-                  @clear="clearSelection"
-                  @save-content="
-                    (fieldIdx, fieldContent) =>
-                      saveFieldContent(index, fieldIdx, fieldContent)
-                  "
-                  @save-settings="
-                    (fieldIdx, fieldSettings) =>
-                      saveFieldSettings(index, fieldIdx, fieldSettings)
-                  "
-                  @delete="(fieldIdx) => deleteField(index, fieldIdx)"
-                />
-
-                <!-- ... -->
-              </div>
+                @drop="dropOnPanel"
+              />
             </transition-group>
           </Draggable>
 
@@ -76,29 +39,19 @@
 
           <!-- actions -->
 
-          <PanelActions
+          <Actions
             v-if="selectedPanel.id"
             class="actions"
             :style="{ top: actionTopPos }"
-            @edit="editPanelSettings"
-            @delete="confirmDeletePanel"
+            @edit="editSettings"
+            @delete="showDeletePanel = true"
           />
 
           <!-- ... -->
 
           <!-- add panel -->
 
-          <div class="add-panel">
-            <div class="separator"></div>
-            <BaseButton
-              is-rounded
-              is-flat
-              color="gray-6"
-              label="add panel"
-              class="add-btn"
-              @click="addPanel"
-            />
-          </div>
+          <AddPanel @click="addPanel" />
 
           <!-- ... -->
         </div>
@@ -107,48 +60,29 @@
 
         <!-- empty state -->
 
-        <div
+        <EmptyState
           v-else
-          class="empty-state-wrapper"
           :class="{ active: dragOverEmptyState }"
           @dragover.prevent="dragEnterEmptyState"
           @dragleave="dragLeaveEmptyState"
           @drop.stop="dropOnEmptyState"
-        >
-          <EmptyState
-            icon="eva-file-text-outline"
-            title="Start building!"
-            description="Drag fields from the left panel and drop here to add them to your form"
-          />
-        </div>
+        />
 
         <!-- ... -->
 
         <!-- panel settings -->
 
-        <PanelSettings
-          v-model="panelSettings"
+        <Settings
+          v-model="settings"
           :panel="selectedPanel"
-          @save="savePanelSettings"
+          @save="saveSettings"
         />
 
         <!-- ... -->
 
-        <!-- confirm delete panel -->
+        <!-- delete panel -->
 
-        <Confirm
-          v-model="deletePanelConfirm"
-          icon="eva-trash-2-outline"
-          @no="cancelDeletePanel"
-          @yes="deletePanel"
-        >
-          <template #title>Delete Panel</template>
-
-          <template #description>
-            Upon deleting this panel, the data associated with it will be
-            deleted and cannot be retrieved. Do you still wish to proceed?
-          </template>
-        </Confirm>
+        <DeletePanel v-model="showDeletePanel" @yes="deletePanel" />
 
         <!-- ... -->
       </div>
@@ -161,12 +95,12 @@ import { lowerCase, isEmpty } from "lodash-es";
 
 import Draggable from "vuedraggable";
 
-import EmptyState from "@/components/common/EmptyState.vue";
-import Confirm from "@/components/common/popup/Confirm.vue";
-
-import PanelActions from "./PanelActions.vue";
-import PanelSettings from "./PanelSettings.vue";
-import Fields from "../field/Fields.vue";
+import EmptyState from "./EmptyState.vue";
+import Panel from "./Panel.vue";
+import Actions from "./Actions.vue";
+import AddPanel from "./AddPanel.vue";
+import DeletePanel from "./DeletePanel.vue";
+import Settings from "./Settings.vue";
 
 export default {
   name: "Panels",
@@ -174,10 +108,11 @@ export default {
   components: {
     Draggable,
     EmptyState,
-    PanelActions,
-    PanelSettings,
-    Fields,
-    Confirm,
+    Panel,
+    Actions,
+    AddPanel,
+    DeletePanel,
+    Settings,
   },
 
   props: {
@@ -194,8 +129,8 @@ export default {
       draggingPanel: false,
       selectedPanel: {},
       activePanel: "",
-      panelSettings: false,
-      deletePanelConfirm: false,
+      settings: false,
+      showDeletePanel: false,
     };
   },
 
@@ -203,11 +138,10 @@ export default {
     actionTopPos() {
       if (isEmpty(this.selectedPanel)) return 0;
 
-      const panelIdx = this.panels.findIndex(
-        (panel) => panel.id === this.selectedPanel.id
+      const refIdx = this.$refs.panel.findIndex(
+        (panel) => panel.$el.dataset.id === this.selectedPanel.id
       );
-
-      return this.$refs.panel[panelIdx].offsetTop + "px";
+      return this.$refs.panel[refIdx].$el.offsetTop + "px";
     },
   },
 
@@ -248,7 +182,19 @@ export default {
       }
     },
 
+    deselectAll() {
+      this.activePanel = "";
+      this.selectedPanel = {};
+      this.$refs.panel.forEach((panel) => panel.deselectFields());
+    },
+
+    selectPanel(panel) {
+      this.deselectAll();
+      this.selectedPanel = panel;
+    },
+
     dragOverPanel(panelId) {
+      this.deselectAll();
       this.activePanel = panelId;
     },
 
@@ -256,23 +202,18 @@ export default {
       this.activePanel = "";
     },
 
-    dropOnPanel(e, panelIdx) {
+    dropOnPanel(e) {
       this.activePanel = "";
 
       const fieldType = e.dataTransfer.getData("field");
 
       if (fieldType) {
         const field = this.newField(fieldType);
+        const panelIdx = this.panels.findIdx(
+          (panel) => panel.id === this.selectedPanel.id
+        );
+
         this.panels[panelIdx].fields.push(field);
-      }
-    },
-
-    clearSelection() {
-      this.selectedPanel = {};
-      this.activePanel = "";
-
-      if (this.panels.length) {
-        this.$refs.fields.forEach((field) => field.clearSelection());
       }
     },
 
@@ -285,16 +226,11 @@ export default {
       });
     },
 
-    selectPanel(panel) {
-      this.clearSelection();
-      this.selectedPanel = panel;
+    editSettings() {
+      this.settings = true;
     },
 
-    editPanelSettings() {
-      this.panelSettings = true;
-    },
-
-    savePanelSettings(settings) {
+    saveSettings(settings) {
       const panelIdx = this.panels.findIndex(
         (panel) => panel.id === this.selectedPanel.id
       );
@@ -303,16 +239,8 @@ export default {
       this.panels[panelIdx].description = settings.description;
     },
 
-    confirmDeletePanel() {
-      this.deletePanelConfirm = true;
-    },
-
-    cancelDeletePanel() {
-      this.deletePanelConfirm = false;
-    },
-
     deletePanel() {
-      this.deletePanelConfirm = false;
+      this.showDeletePanel = false;
 
       const panelIdx = this.panels.findIndex(
         (panel) => panel.id === this.selectedPanel.id
@@ -415,73 +343,6 @@ export default {
 .empty-state-wrapper {
   width: 720px;
   position: relative;
-}
-
-.empty-state-wrapper {
-  height: calc(100vh - 162px);
-}
-
-.empty-state-wrapper {
-  border: 1px dashed $gray-3;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.empty-state-wrapper.active {
-  border: 1px dashed $secondary;
-}
-
-.panel {
-  padding: 16px 12px;
-  background-color: white;
-  border-radius: 4px;
-  margin-bottom: 24px;
-  cursor: pointer;
-  border: 1px solid $gray-2;
-  position: relative;
-
-  .drag-icon {
-    position: absolute;
-    top: 16px;
-    left: -32px;
-  }
-
-  .title {
-    font-weight: bold;
-    color: $gray-10;
-    text-transform: capitalize;
-  }
-
-  .description {
-    font-size: 12px;
-    color: $gray-5;
-  }
-}
-
-.panel.selected,
-.panel.active {
-  border: 1px dashed $primary;
-}
-
-.add-panel {
-  position: relative;
-  padding-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .separator {
-    width: 100%;
-    border-bottom: 1px dashed $gray-4;
-    position: absolute;
-    top: 18px;
-  }
-
-  .add-btn {
-    background-color: $gray-2;
-  }
 }
 
 .actions {

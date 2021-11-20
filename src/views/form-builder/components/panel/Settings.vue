@@ -33,7 +33,7 @@ import InputField from "@/components/common/form/InputField.vue";
 import TextareaField from "@/components/common/form/TextareaField.vue";
 
 export default {
-  title: "PanelSettings",
+  title: "Settings",
 
   components: { Sheet, InputField, TextareaField },
 

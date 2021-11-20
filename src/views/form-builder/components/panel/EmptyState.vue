@@ -1,15 +1,13 @@
 <template>
-  <div class="empty-state">
+  <div v-on="$listeners" class="empty-state">
     <div class="avatar">
-      <q-icon :name="icon" class="icon" size="64px"></q-icon>
+      <q-icon name="eva-file-text-outline" class="icon" size="64px" />
     </div>
 
-    <div class="title">{{ title }}</div>
+    <div class="title">Start building!</div>
 
-    <div class="description">{{ description }}</div>
-
-    <div v-if="action" class="action">
-      <BaseButton :label="action" :icon-left="actionIcon" color="secondary" />
+    <div class="description">
+      Drag fields from the left panel and drop here to add them to your form
     </div>
   </div>
 </template>
@@ -18,41 +16,24 @@
 export default {
   name: "EmptyState",
 
-  props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-
-    title: {
-      type: String,
-      required: true,
-    },
-
-    description: {
-      type: String,
-      required: true,
-    },
-
-    action: {
-      type: String,
-      default: "",
-    },
-
-    actionIcon: {
-      type: String,
-      default: "",
-    },
-  },
+  props: {},
 };
 </script>
 
 <style lang="scss" scoped>
 .empty-state {
+  height: calc(100vh - 162px);
+  width: 720px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 1px dashed $gray-3;
+  border-radius: 4px;
+
+  &.active {
+    border: 1px dashed $secondary;
+  }
 
   .avatar {
     height: 96px;

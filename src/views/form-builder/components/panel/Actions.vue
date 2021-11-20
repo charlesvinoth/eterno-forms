@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: "PanelActions",
+  name: "Actions",
 };
 </script>
 
