@@ -7,45 +7,26 @@
         <div v-if="panels.length" class="panels-wrapper">
           <!-- panels -->
 
-          <Draggable
-            v-model="panels"
-            v-bind="{ animation: 200 }"
-            @start="draggingPanel = true"
-            @end="draggingPanel = false"
-          >
-            <transition-group
-              type="transition"
-              :name="draggingPanel ? null : 'flip-list'"
-            >
-              <Panel
-                v-for="panel in panels"
-                ref="panel"
-                :key="panel.id"
-                :data-id="panel.id"
-                :panel="panel"
-                :class="{
-                  selected: selectedPanel.id === panel.id,
-                  active: activePanel === panel.id,
-                }"
-                @click.stop="selectPanel(panel)"
-                @dragover.prevent="dragOverPanel(panel.id)"
-                @dragleave="dragLeavePanel"
-                @drop="dropOnPanel"
-              />
-            </transition-group>
+          <Draggable v-model="panels">
+            <Panel
+              v-for="panel in panels"
+              ref="panel"
+              :key="panel.id"
+              :data-id="panel.id"
+              :panel="panel"
+              :show-actions="selectedPanel.id === panel.id"
+              :class="{
+                selected: selectedPanel.id === panel.id,
+                active: activePanel === panel.id,
+              }"
+              @click.stop="selectPanel(panel)"
+              @dragover.prevent="dragOverPanel(panel.id)"
+              @dragleave="dragLeavePanel"
+              @drop="dropOnPanel"
+              @edit="editSettings"
+              @delete="showDeletePanel = true"
+            />
           </Draggable>
-
-          <!-- ... -->
-
-          <!-- actions -->
-
-          <Actions
-            v-if="selectedPanel.id"
-            class="actions"
-            :style="{ top: actionTopPos }"
-            @edit="editSettings"
-            @delete="showDeletePanel = true"
-          />
 
           <!-- ... -->
 
@@ -91,13 +72,12 @@
 </template>
 
 <script>
-import { lowerCase, isEmpty } from "lodash-es";
+import { lowerCase } from "lodash-es";
 
-import Draggable from "vuedraggable";
+import Draggable from "@/components/common/Draggable.vue";
 
 import EmptyState from "./EmptyState.vue";
 import Panel from "./Panel.vue";
-import Actions from "./Actions.vue";
 import AddPanel from "./AddPanel.vue";
 import DeletePanel from "./DeletePanel.vue";
 import Settings from "./Settings.vue";
@@ -109,7 +89,6 @@ export default {
     Draggable,
     EmptyState,
     Panel,
-    Actions,
     AddPanel,
     DeletePanel,
     Settings,
@@ -132,17 +111,6 @@ export default {
       settings: false,
       showDeletePanel: false,
     };
-  },
-
-  computed: {
-    actionTopPos() {
-      if (isEmpty(this.selectedPanel)) return 0;
-
-      const refIdx = this.$refs.panel.findIndex(
-        (panel) => panel.$el.dataset.id === this.selectedPanel.id
-      );
-      return this.$refs.panel[refIdx].$el.offsetTop + "px";
-    },
   },
 
   watch: {
@@ -203,18 +171,18 @@ export default {
     },
 
     dropOnPanel(e) {
-      this.activePanel = "";
-
       const fieldType = e.dataTransfer.getData("field");
 
       if (fieldType) {
         const field = this.newField(fieldType);
-        const panelIdx = this.panels.findIdx(
-          (panel) => panel.id === this.selectedPanel.id
+        const panelIdx = this.panels.findIndex(
+          (panel) => panel.id === this.activePanel
         );
 
         this.panels[panelIdx].fields.push(field);
       }
+
+      this.activePanel = "";
     },
 
     addPanel() {

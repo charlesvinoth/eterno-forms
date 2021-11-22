@@ -1,5 +1,5 @@
 <template>
-  <div v-bind="$listeners" class="form-field" draggable>
+  <div v-on="$listeners" class="form-field" draggable>
     <q-icon name="drag_indicator" size="16px" color="gray-5"></q-icon>
 
     <div class="icon-wrapper">

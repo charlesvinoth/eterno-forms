@@ -19,6 +19,32 @@
 
     <!-- ... -->
 
+    <!-- actions -->
+
+    <div v-if="showActions" class="actions">
+      <q-btn
+        v-tooltip:primary.right="'panel settings'"
+        round
+        size="sm"
+        icon="eva-settings-2-outline"
+        color="primary"
+        class="q-mb-xs"
+        @click.stop="$emit('edit')"
+      />
+
+      <q-btn
+        v-tooltip:red.right="'delete panel'"
+        round
+        size="sm"
+        icon="eva-trash-2-outline"
+        color="red"
+        class="q-mb-xs"
+        @click.stop="$emit('delete')"
+      />
+    </div>
+
+    <!-- ... -->
+
     <!-- fields -->
 
     <!-- <Fields
@@ -36,22 +62,29 @@
       @delete="(fieldIdx) => deleteField(index, fieldIdx)"
     /> -->
 
+    <Fields v-model="panel.fields" ref="fields" />
+
     <!-- ... -->
   </div>
 </template>
 
 <script>
-// import Fields from "../field/Fields.vue";
+import Fields from "../field/Fields.vue";
 
 export default {
   name: "Panel",
 
-  // components: { Fields },
+  components: { Fields },
 
   props: {
     panel: {
       type: Object,
       required: true,
+    },
+
+    showActions: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -78,6 +111,14 @@ export default {
     position: absolute;
     top: 16px;
     left: -32px;
+  }
+
+  .actions {
+    position: absolute;
+    top: 0;
+    right: -36px;
+    display: flex;
+    flex-direction: column;
   }
 
   .title {
