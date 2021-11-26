@@ -17,7 +17,7 @@
 
           <!-- panels -->
 
-          <Panels :form="form" @save="savePanels" />
+          <Panels v-model="form.panels" @save="savePanels" />
 
           <!-- ... -->
 

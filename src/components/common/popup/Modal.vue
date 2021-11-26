@@ -78,8 +78,8 @@ export default {
 
 .modal-title {
   color: $gray-10;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: bold;
   text-transform: capitalize;
   flex-grow: 1;
 }

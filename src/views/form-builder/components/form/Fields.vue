@@ -1,11 +1,5 @@
 <template>
   <BaseScrollbar height="calc(100vh - 57px)" width="320px" class="form-fields">
-    <!-- title -->
-
-    <div class="title">Form Fields</div>
-
-    <!-- ... -->
-
     <div class="q-px-md">
       <!-- tabs -->
 
@@ -14,7 +8,7 @@
         :tabs="tabs"
         equal-tab-size
         color="secondary"
-        class="q-mb-md"
+        class="q-mt-sm q-mb-md"
       />
 
       <!-- ... -->
@@ -61,9 +55,16 @@ export default {
       fields: [
         {
           id: this.$nano.id(),
-          name: "title",
-          type: "TITLE",
+          name: "text",
+          type: "TEXT",
           icon: "mdi-format-text",
+          group: "basic",
+        },
+        {
+          id: this.$nano.id(),
+          name: "section",
+          type: "SECTION",
+          icon: "vertical_distribute",
           group: "basic",
         },
         {
@@ -85,6 +86,13 @@ export default {
           name: "number",
           type: "NUMBER",
           icon: "mdi-numeric",
+          group: "basic",
+        },
+        {
+          id: this.$nano.id(),
+          name: "decimal",
+          type: "DECIMAL",
+          icon: "mdi-decimal",
           group: "basic",
         },
         {
@@ -204,16 +212,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  height: 56px;
-  display: flex;
-  align-items: center;
-  color: $gray-10;
-  font-size: 13px;
-  font-weight: bold;
-  padding: 0px 16px;
-}
-
 .form-fields {
   background-color: white;
   border-right: 1px solid $gray-2;

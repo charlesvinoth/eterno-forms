@@ -12,7 +12,7 @@
           <!-- title -->
 
           <InputField
-            v-model="title"
+            v-model="field.title"
             label="title"
             is-mandatory
             :error="titleError"
@@ -24,7 +24,7 @@
           <!-- title size -->
 
           <SingleChoiceField
-            v-model="titleSize"
+            v-model="field.titleSize"
             label="size"
             :options="sizes"
             :options-per-line="3"
@@ -37,7 +37,7 @@
           <!-- title alignment -->
 
           <SingleChoiceField
-            v-model="titleAlignment"
+            v-model="field.titleAlignment"
             label="alignment"
             :options="titleAlignments"
             :options-per-line="3"
@@ -49,13 +49,13 @@
 
           <!-- title color -->
 
-          <ColorField v-model="titleColor" label="color" class="field" />
+          <ColorField v-model="field.titleColor" label="color" class="field" />
 
           <!-- ... -->
 
           <!-- subtitle -->
 
-          <InputField v-model="subTitle" label="subtitle" class="field" />
+          <InputField v-model="field.subTitle" label="subtitle" class="field" />
 
           <!-- ... -->
         </template>
@@ -64,7 +64,7 @@
 
         <InputField
           v-if="showLabel"
-          v-model="label"
+          v-model="field.label"
           label="label"
           is-mandatory
           :error="labelError"
@@ -75,9 +75,9 @@
 
         <!-- tooltip -->
 
-        <TextareaField
+        <InputField
           v-if="showTooltip"
-          v-model="tooltip"
+          v-model="field.tooltip"
           label="tooltip"
           class="field"
         />
@@ -88,7 +88,7 @@
 
         <SingleChoiceField
           v-if="showSize"
-          v-model="size"
+          v-model="field.size"
           label="size"
           :options="sizes"
           :options-per-line="3"
@@ -102,7 +102,7 @@
 
         <SingleChoiceField
           v-if="showIsMandatory"
-          v-model="isMandatory"
+          v-model="field.isMandatory"
           label="is mandatory"
           :options="binaryOptions"
           :options-per-line="3"
@@ -117,14 +117,14 @@
         <template v-if="field.type === 'DATE'">
           <!-- min date -->
 
-          <DateField v-model="minDate" label="min date" class="field" />
+          <DateField v-model="field.minDate" label="min date" class="field" />
 
           <!-- ... -->
 
           <!-- max date -->
 
           <DateField
-            v-model="maxDate"
+            v-model="field.maxDate"
             label="max date"
             :error="maxDateError"
             class="field"
@@ -140,14 +140,14 @@
         <template v-if="field.type === 'TIME'">
           <!-- min time -->
 
-          <TimeField v-model="minTime" label="min time" class="field" />
+          <TimeField v-model="field.minTime" label="min time" class="field" />
 
           <!-- ... -->
 
           <!-- max time -->
 
           <TimeField
-            v-model="maxTime"
+            v-model="field.maxTime"
             label="max time"
             :error="maxTimeError"
             class="field"
@@ -162,7 +162,7 @@
 
         <OptionsField
           v-if="showOptions"
-          v-model="options"
+          v-model="field.options"
           label="options"
           is-mandatory
           :error="optionsError"
@@ -174,7 +174,7 @@
 
         <SingleSelectField
           v-if="showOptionsPerLine"
-          v-model="optionsPerLine"
+          v-model="field.optionsPerLine"
           label="options per line"
           :options="optionsPerLines"
           hide-search
@@ -188,7 +188,7 @@
 
         <VectorsField
           v-if="showColumns"
-          v-model="columns"
+          v-model="field.columns"
           label="columns"
           vector-type="COLUMN"
           :error="columnsError"
@@ -201,7 +201,7 @@
 
         <VectorsField
           v-if="showRows"
-          v-model="rows"
+          v-model="field.rows"
           label="rows"
           vector-type="ROW"
           class="field"
@@ -213,7 +213,7 @@
 
         <SingleChoiceField
           v-if="showRows"
-          v-model="matrixAxis"
+          v-model="field.matrixAxis"
           label="matrix axis"
           :options="matrixAxes"
           :options-per-line="3"
@@ -228,7 +228,7 @@
 
         <VectorSettingsField
           v-if="showColumns"
-          v-model="vectors"
+          v-model="field.vectors"
           :label="vectorAxis"
           class="field"
         />
@@ -239,7 +239,7 @@
 
         <SingleChoiceField
           v-if="field.type === 'DIVIDER'"
-          v-model="dividerStyle"
+          v-model="field.dividerStyle"
           label="divider style"
           :options="dividerStyles"
           :options-per-line="3"
@@ -265,7 +265,6 @@ import { requiredIf } from "vuelidate/lib/validators";
 
 import Sheet from "@/components/common/popup/Sheet.vue";
 import InputField from "@/components/common/form/InputField.vue";
-import TextareaField from "@/components/common/form/TextareaField.vue";
 import SingleChoiceField from "@/components/common/form/SingleChoiceField.vue";
 import DateField from "@/components/common/form/DateField.vue";
 import TimeField from "@/components/common/form/TimeField.vue";
@@ -276,12 +275,11 @@ import VectorsField from "@/components/common/form/VectorsField.vue";
 import VectorSettingsField from "@/components/common/form/VectorSettingsField.vue";
 
 export default {
-  title: "FieldSettings",
+  title: "Settings",
 
   components: {
     Sheet,
     InputField,
-    TextareaField,
     SingleChoiceField,
     DateField,
     TimeField,
@@ -298,7 +296,7 @@ export default {
       default: false,
     },
 
-    field: {
+    selectedField: {
       type: Object,
       required: true,
     },
@@ -306,9 +304,7 @@ export default {
 
   data() {
     return {
-      title: "",
-      titleSize: "",
-      titleAlignment: "",
+      field: {},
       titleAlignments: [
         {
           id: this.$nano.id(),
@@ -326,12 +322,6 @@ export default {
           value: "RIGHT",
         },
       ],
-      titleColor: "",
-      subTitle: "",
-      label: "",
-      tooltip: "",
-      isMandatory: false,
-      size: "MEDIUM",
       sizes: [
         {
           id: this.$nano.id(),
@@ -361,11 +351,6 @@ export default {
           value: false,
         },
       ],
-      minDate: "",
-      maxDate: "",
-      minTime: "",
-      maxTime: "",
-      options: [],
       optionsPerLines: [
         {
           id: this.$nano.id(),
@@ -398,7 +383,6 @@ export default {
           value: 0,
         },
       ],
-      dividerStyle: "",
       dividerStyles: [
         {
           id: this.$nano.id(),
@@ -416,9 +400,6 @@ export default {
           value: "DOTTED",
         },
       ],
-      columns: [],
-      rows: [],
-      matrixAxis: "COLUMN",
       matrixAxes: [
         {
           id: this.$nano.id(),
@@ -479,8 +460,10 @@ export default {
       }),
 
       shoulNotHaveEmptyColumns(value) {
-        for (let i = 0; i < value.length; i++) {
-          if (!value[i].name) return false;
+        if (value) {
+          for (let i = 0; i < value.length; i++) {
+            if (!value[i].name) return false;
+          }
         }
 
         return true;
@@ -653,30 +636,10 @@ export default {
   },
 
   watch: {
-    value: {
+    selectedField: {
       immediate: true,
       handler() {
-        const clonedField = cloneDeep(this.field);
-
-        this.title = clonedField.titleText;
-        this.titleSize = clonedField.titleSize;
-        this.titleAlignment = clonedField.titleAlignment;
-        this.titleColor = clonedField.titleColor;
-        this.subTitle = clonedField.subTitle;
-        this.label = clonedField.label;
-        this.tooltip = clonedField.tooltip;
-        this.size = clonedField.size;
-        this.isMandatory = clonedField.isMandatory;
-        this.minDate = clonedField.minDate;
-        this.maxDate = clonedField.maxDate;
-        this.minTime = clonedField.minTime;
-        this.maxTime = clonedField.maxTime;
-        this.options = clonedField.options;
-        this.optionsPerLine = clonedField.optionsPerLine;
-        this.dividerStyle = clonedField.dividerStyle;
-        this.columns = clonedField.columns;
-        this.rows = clonedField.rows;
-        this.matrixAxis = clonedField.matrixAxis;
+        this.field = cloneDeep(this.selectedField);
       },
     },
   },
@@ -691,29 +654,7 @@ export default {
       this.$v.$touch();
 
       if (!this.$v.$error) {
-        this.$emit("save", {
-          ...this.field,
-          titleText: this.title,
-          titleSize: this.titleSize,
-          titleAlignment: this.titleAlignment,
-          titleColor: this.titleColor,
-          subTitle: this.subTitle,
-          label: this.label,
-          tooltip: this.tooltip,
-          size: this.size,
-          isMandatory: this.isMandatory,
-          minDate: this.minDate,
-          maxDate: this.maxDate,
-          minTime: this.minTime,
-          maxTime: this.maxTime,
-          options: this.options,
-          optionsPerLine: this.optionsPerLine,
-          dividerStyle: this.dividerStyle,
-          columns: this.columns,
-          rows: this.rows,
-          matrixAxis: this.matrixAxis,
-        });
-
+        this.$emit("save", this.field);
         this.onCancel();
       }
     },

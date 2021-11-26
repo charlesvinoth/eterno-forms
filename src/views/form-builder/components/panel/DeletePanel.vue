@@ -36,7 +36,8 @@ export default {
     },
 
     onYes() {
-      this.$emit("yes");
+      this.$emit("input", false);
+      this.$emit("delete");
     },
   },
 };

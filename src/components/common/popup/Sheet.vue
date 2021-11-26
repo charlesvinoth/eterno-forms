@@ -1,5 +1,11 @@
 <template>
-  <q-dialog :value="value" position="right" maximized @input="onInput">
+  <q-dialog
+    :value="value"
+    position="right"
+    maximized
+    :persistent="isPersistent"
+    @input="onInput"
+  >
     <div class="sheet box-shadow-2xl" :style="{ width }">
       <div class="sheet-header">
         <div class="sheet-title">{{ title }}</div>
@@ -11,7 +17,7 @@
             icon="eva-close"
             color="gray-6"
             @click="onClick"
-          ></BaseIconButton>
+          />
         </div>
       </div>
 
@@ -49,6 +55,11 @@ export default {
     width: {
       type: String,
       default: "360px",
+    },
+
+    isPersistent: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -88,8 +99,8 @@ export default {
 
 .sheet-title {
   color: $gray-10;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: bold;
   text-transform: capitalize;
   flex-grow: 1;
 }
