@@ -140,17 +140,5 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
-
-  .title {
-    color: $gray-10;
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 2px;
-  }
-
-  .subtitle {
-    color: $gray;
-    font-size: 12px;
-  }
 }
 </style>

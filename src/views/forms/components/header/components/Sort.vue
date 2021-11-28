@@ -23,7 +23,7 @@
         :icon="
           sortOrder === 'DESC' ? 'eva-checkmark-square-2' : 'eva-square-outline'
         "
-        :icon-color="sortOrder === 'DESC' ? 'deep-orange' : 'gray-4'"
+        :icon-color="sortOrder === 'DESC' ? 'tertiary' : 'gray-4'"
         @click="setSortOrder"
       ></MenuItem>
     </Menu>

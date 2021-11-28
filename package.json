@@ -19,6 +19,7 @@
     "@tiptap/extension-underline": "^2.0.0-beta.21",
     "@tiptap/starter-kit": "^2.0.0-beta.145",
     "@tiptap/vue-2": "^2.0.0-beta.69",
+    "chart.js": "^3.6.0",
     "core-js": "^3.19.1",
     "dayjs": "^1.10.7",
     "lodash-es": "^4.17.21",
