@@ -2,20 +2,22 @@
   <AppLayout>
     <template #page-content>
       <div class="container">
-        <div class="title">Welcome Amelia,</div>
-        <div class="subtitle">
-          Here is your forms and their submissions summary
-        </div>
+        <!-- header -->
 
-        <div class="q-mt-xl">
-          <div class="row items-center q-col-gutter-lg">
-            <div v-for="status in statuses" :key="status.id" class="col-2">
-              <StatusCard :status="status" />
-            </div>
+        <div class="q-mb-lg">
+          <div class="title">Welcome Amelia,</div>
+          <div class="subtitle q-mt-xs">
+            Here is your forms & submissions summary
           </div>
-
-          <StatusChart class="q-mt-lg" />
         </div>
+
+        <!-- ... -->
+
+        <!-- status widget -->
+
+        <StatusWidget />
+
+        <!-- ... -->
       </div>
     </template>
   </AppLayout>
@@ -24,62 +26,12 @@
 <script>
 import AppLayout from "@/layouts/app/AppLayout.vue";
 
-import StatusCard from "./components/StatusCard.vue";
-import StatusChart from "./components/status-chart/StatusChart.vue";
+import StatusWidget from "./components/status-widgets/StatusWidget.vue";
 
 export default {
   name: "Dashboard",
 
-  components: { AppLayout, StatusCard, StatusChart },
-
-  data() {
-    return {
-      statuses: [
-        {
-          id: this.$nano.id(),
-          label: "all",
-          count: "24",
-          icon: "mdi-view-dashboard-outline",
-          color: "primary",
-        },
-        {
-          id: this.$nano.id(),
-          label: "published",
-          count: "09",
-          icon: "eva-external-link-outline",
-          color: "tertiary-4",
-        },
-        {
-          id: this.$nano.id(),
-          label: "draft",
-          count: "05",
-          icon: "mdi-text-box-outline",
-          color: "secondary",
-        },
-        {
-          id: this.$nano.id(),
-          label: "archive",
-          count: "03",
-          icon: "eva-archive-outline",
-          color: "blue-5",
-        },
-        {
-          id: this.$nano.id(),
-          label: "trash",
-          count: "07",
-          icon: "eva-trash-2-outline",
-          color: "pink-5",
-        },
-        {
-          id: this.$nano.id(),
-          label: "favourite",
-          count: "06",
-          icon: "eva-star-outline",
-          color: "amber-6",
-        },
-      ],
-    };
-  },
+  components: { AppLayout, StatusWidget },
 };
 </script>
 

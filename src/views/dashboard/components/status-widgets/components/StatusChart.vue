@@ -1,42 +1,65 @@
 <template>
-  <div class="pie-chart">
-    <div class="total">
+  <div class="status-chart">
+    <canvas id="statusChart"></canvas>
+
+    <div class="info">
       <div class="text-center">
         <div class="label">Total Forms</div>
-        <div class="count">24</div>
+        <div class="count">{{ stats[0].count }}</div>
         <div class="label">100%</div>
       </div>
     </div>
-    <canvas id="pieChart"></canvas>
   </div>
 </template>
 
 <script>
 import Chart from "chart.js/auto";
 
+import { mapGetters } from "vuex";
+
 export default {
   name: "PieChart",
 
+  computed: {
+    ...mapGetters("forms", ["stats"]),
+
+    _stats() {
+      // remove the first and the last element, since it is not needed
+
+      const stats = [...this.stats];
+      stats.pop();
+      stats.shift();
+
+      return stats;
+    },
+
+    labels() {
+      return this._stats.map((stat) => stat.label);
+    },
+
+    count() {
+      return this._stats.map((stat) => stat.count);
+    },
+
+    color() {
+      return this._stats.map((stat) => stat.color.rgba);
+    },
+  },
+
   mounted() {
-    const ctx = document.getElementById("pieChart");
+    const ctx = document.getElementById("statusChart");
     new Chart(ctx, {
       type: "doughnut",
       data: {
-        labels: ["All", "Published", "Draft", "Archive", "Trash", "Favourite"],
+        labels: this.labels,
         datasets: [
           {
             label: "# of Forms",
-            data: [9, 5, 3, 7, 6],
-            backgroundColor: [
-              "rgba(37, 204, 201, 0.5)",
-              "rgba(249, 119, 103, 0.5)",
-              "rgba(66, 165, 245, 0.5)",
-              "rgba(236, 64, 122, 0.5)",
-              "rgba(255, 193, 7, 0.5)",
-            ],
+            data: this.count,
+            backgroundColor: this.color,
             borderColor: "#fff",
             borderRadius: 4,
-            cutout: 90,
+            cutout: 70,
           },
         ],
       },
@@ -62,18 +85,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pie-chart {
-  width: 240px;
-  height: 240px;
+.status-chart {
+  width: 186px;
+  height: 186px;
+  margin-top: 24px;
   position: relative;
 
-  .total {
+  .info {
+    z-index: 0;
     position: absolute;
     left: calc(50% - 40px);
     top: calc(50% - 40px);
     width: 80px;
     height: 80px;
-    border-radius: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -84,7 +108,7 @@ export default {
     }
 
     .count {
-      color: $gray-8;
+      color: $gray-10;
       font-size: 24px;
       font-weight: bold;
     }

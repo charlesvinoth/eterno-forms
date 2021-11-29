@@ -1,75 +1,78 @@
 <template>
   <div class="line-chart">
+    <!-- axes -->
+
     <div class="axes">
       <div v-for="axis in axes" :key="axis" class="axis">
         <div class="label">{{ axis }}%</div>
       </div>
     </div>
 
+    <!-- ... -->
+
+    <!-- bars -->
+
     <div class="bars">
       <div
         v-for="bar in bars"
         :key="bar.id"
-        class="bar"
-        :class="color(bar.color)"
+        class="bar-wrapper"
+        :class="`text-${bar.color.name}`"
       >
-        <div class="start"></div>
+        <div class="indicator"></div>
 
-        <div
-          class="center"
-          :style="{ width: `calc(${percentage(bar.count)}% - 16px)` }"
-        ></div>
+        <div class="bar" :style="{ width: bar.width }"></div>
 
-        <div class="end">
+        <div class="count">
           <div class="label">
             {{ bar.count }}
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ... -->
   </div>
 </template>
 
 <script>
+import { cloneDeep } from "lodash-es";
+import { mapGetters } from "vuex";
+
 export default {
   name: "LineChart",
 
   data() {
     return {
       axes: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-      bars: [
-        {
-          id: this.$nano.id(),
-          label: "published",
-          count: 9,
-          color: "tertiary-4",
-        },
-        {
-          id: this.$nano.id(),
-          label: "draft",
-          count: 5,
-          color: "secondary",
-        },
-        {
-          id: this.$nano.id(),
-          label: "archive",
-          count: 3,
-          color: "blue-5",
-        },
-        {
-          id: this.$nano.id(),
-          label: "trash",
-          count: 7,
-          color: "pink-5",
-        },
-        {
-          id: this.$nano.id(),
-          label: "favourite",
-          count: 6,
-          color: "amber-6",
-        },
-      ],
+      bars: [],
     };
+  },
+
+  computed: {
+    ...mapGetters("forms", ["stats"]),
+  },
+
+  watch: {
+    stats: {
+      immediate: true,
+      deep: true,
+      handler() {
+        const stats = cloneDeep(this.stats);
+        stats.shift(); // remove the first element, since it is not needed
+
+        stats.forEach((stat) => (stat.width = "0px"));
+        this.bars = stats;
+
+        // for animation
+
+        setTimeout(() => {
+          this.bars.forEach(
+            (bar) => (bar.width = `calc(${this.percentage(bar.count)}% - 16px)`)
+          );
+        }, 180);
+      },
+    },
   },
 
   methods: {
@@ -78,7 +81,7 @@ export default {
     },
 
     percentage(count) {
-      return Math.floor((count * 100) / 24);
+      return Math.floor((count * 100) / this.stats[0].count);
     },
   },
 };
@@ -86,16 +89,14 @@ export default {
 
 <style lang="scss" scoped>
 .line-chart {
-  height: 240px;
+  flex: 1;
+  height: 100%;
   margin: 0px 36px;
   position: relative;
 
   .axes {
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    top: 0;
-    width: 100%;
     height: 100%;
 
     .axis {
@@ -106,7 +107,7 @@ export default {
         color: $gray-5;
         font-size: 12px;
         position: absolute;
-        bottom: -24px;
+        bottom: -26px;
         left: -16px;
         width: 32px;
         text-align: center;
@@ -115,7 +116,6 @@ export default {
   }
 
   .bars {
-    display: flex;
     position: absolute;
     top: 0;
     width: 100%;
@@ -123,13 +123,12 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background: transparent;
 
-    .bar {
+    .bar-wrapper {
       display: flex;
       align-items: center;
 
-      .start {
+      .indicator {
         height: 16px;
         width: 2px;
         border-radius: 4px;
@@ -137,13 +136,14 @@ export default {
         opacity: 0.5;
       }
 
-      .center {
+      .bar {
         height: 8px;
         background-color: currentColor;
         opacity: 0.5;
+        transition: all 0.3s ease;
       }
 
-      .end {
+      .count {
         width: 32px;
         height: 32px;
         background-color: currentColor;
