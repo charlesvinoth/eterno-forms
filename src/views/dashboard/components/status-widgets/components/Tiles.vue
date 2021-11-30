@@ -2,8 +2,10 @@
   <div class="tiles">
     <div v-for="stat in _stats" :key="stat.id" class="tile">
       <div class="indicator" :class="`text-${stat.color.name}`"></div>
-      <div class="label">{{ stat.label }}</div>
+      <div class="name">{{ stat.label }}</div>
     </div>
+
+    <div class="label">Percentage</div>
   </div>
 </template>
 
@@ -34,6 +36,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  position: relative;
 
   .tile {
     height: 36px;
@@ -53,12 +56,21 @@ export default {
       border: 2px solid white;
     }
 
-    .label {
+    .name {
       color: $gray;
       font-size: 14px;
       text-transform: capitalize;
       margin-left: 8px;
     }
+  }
+
+  .label {
+    color: $gray-5;
+    font-size: 12px;
+    position: absolute;
+    bottom: -26px;
+    width: 100%;
+    text-align: right;
   }
 }
 </style>

@@ -4,12 +4,12 @@
 
     <div class="info">
       <div class="text-center">
-        <div class="label">
-          <slot name="label"></slot>
-        </div>
-
         <div class="count">
           <slot name="count"></slot>
+        </div>
+
+        <div class="label">
+          <slot name="label"></slot>
         </div>
       </div>
     </div>
@@ -88,9 +88,8 @@ export default {
 
 <style lang="scss" scoped>
 .pie-chart {
-  width: 186px;
-  height: 186px;
-  margin-top: 24px;
+  width: 190px;
+  height: 190px;
   position: relative;
 
   .info {

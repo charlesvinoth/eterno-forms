@@ -8,20 +8,24 @@
 
     <!-- chart -->
 
-    <div class="chart">
-      <Tiles />
+    <div class="chart-wrapper">
+      <div class="chart">
+        <Tiles />
 
-      <LineChart />
+        <LineChart />
 
-      <PieChart name="statusChart" :stats="statusChartData" class="q-mr-md">
-        <template #label>Total Forms</template>
-        <template #count>{{ stats[0].count }}</template>
-      </PieChart>
+        <PieChart name="statusChart" :stats="statusChartData" class="q-mr-md">
+          <template #count>{{ stats[0].count }}</template>
+          <template #label>Total Forms</template>
+        </PieChart>
 
-      <PieChart name="favouriteChart" :stats="favouriteChartData">
-        <template #label>Favourite Forms</template>
-        <template #count>{{ stats[5].count }}</template>
-      </PieChart>
+        <PieChart name="favouriteChart" :stats="favouriteChartData">
+          <template #count>{{ stats[5].count }}</template>
+          <template #label>Favourite Forms</template>
+        </PieChart>
+      </div>
+
+      <div class="floating-label">Form Statistics</div>
     </div>
 
     <!-- ... -->
@@ -65,16 +69,30 @@ export default {
 
 <style lang="scss" scoped>
 .status-widget {
-  .chart {
-    background-color: white;
-    border: 1px solid $gray-2;
-    border-radius: 24px;
-    box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
-    padding: 16px 24px 36px 24px;
-    display: flex;
-    align-items: center;
-    margin-top: 24px;
-    height: 260px;
+  .chart-wrapper {
+    position: relative;
+
+    .chart {
+      background-color: white;
+      border: 1px solid $gray-2;
+      border-radius: 24px;
+      box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
+      padding: 24px 24px 36px 24px;
+      display: flex;
+      align-items: center;
+      margin-top: 24px;
+      height: 260px;
+    }
+
+    .floating-label {
+      color: $gray-5;
+      font-size: 12px;
+      position: absolute;
+      right: 24px;
+      bottom: 12px;
+      width: 396px;
+      text-align: center;
+    }
   }
 }
 </style>
