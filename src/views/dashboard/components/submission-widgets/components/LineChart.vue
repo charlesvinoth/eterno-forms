@@ -80,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .line-chart {
-  width: 66%;
+  width: calc(100vw - 602px);
   background-color: white;
   border: 1px solid $gray-2;
   border-radius: 24px;

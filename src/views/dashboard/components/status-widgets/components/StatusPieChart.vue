@@ -1,14 +1,28 @@
 <template>
   <div class="status-chart">
-    <canvas id="statusChart"></canvas>
+    <!-- chart -->
 
-    <div class="info">
-      <div class="text-center">
-        <div class="label">Total Forms</div>
-        <div class="count">{{ stats[0].count }}</div>
-        <div class="label">100%</div>
+    <div class="chart-wrapper">
+      <canvas id="statusChart"></canvas>
+
+      <div class="info">
+        <div class="text-center">
+          <div class="count">
+            {{ stats[0].count }}
+          </div>
+
+          <div class="label">Total forms</div>
+        </div>
       </div>
     </div>
+
+    <!-- ... -->
+
+    <!-- legend -->
+
+    <div class="legend">Form Statistics</div>
+
+    <!-- ... -->
   </div>
 </template>
 
@@ -18,7 +32,7 @@ import Chart from "chart.js/auto";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "PieChart",
+  name: "StatusPieChart",
 
   computed: {
     ...mapGetters("forms", ["stats"]),
@@ -27,8 +41,8 @@ export default {
       // remove the first and the last element, since it is not needed
 
       const stats = [...this.stats];
-      stats.pop();
       stats.shift();
+      stats.pop();
 
       return stats;
     },
@@ -54,12 +68,11 @@ export default {
         labels: this.labels,
         datasets: [
           {
-            label: "# of Forms",
             data: this.count,
             backgroundColor: this.color,
             borderColor: "#fff",
             borderRadius: 4,
-            cutout: 70,
+            cutout: 75,
           },
         ],
       },
@@ -86,32 +99,48 @@ export default {
 
 <style lang="scss" scoped>
 .status-chart {
-  width: 186px;
-  height: 186px;
-  margin-top: 24px;
-  position: relative;
+  background-color: white;
+  border: 1px solid $gray-2;
+  border-radius: 24px;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
+  padding: 24px;
 
-  .info {
-    z-index: 0;
-    position: absolute;
-    left: calc(50% - 40px);
-    top: calc(50% - 40px);
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .chart-wrapper {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: auto;
 
-    .label {
-      color: $gray-5;
-      font-size: 12px;
+    .info {
+      position: absolute;
+      left: calc(50% - 60px);
+      top: calc(50% - 60px);
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .label {
+        color: $gray-5;
+        font-size: 12px;
+        text-transform: capitalize;
+      }
+
+      .count {
+        color: $gray-10;
+        font-size: 24px;
+        font-weight: bold;
+      }
     }
+  }
 
-    .count {
-      color: $gray-10;
-      font-size: 24px;
-      font-weight: bold;
-    }
+  .legend {
+    color: $gray-5;
+    font-size: 13px;
+    text-transform: capitalize;
+    text-align: center;
+    margin-top: 24px;
   }
 }
 </style>

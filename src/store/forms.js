@@ -1231,9 +1231,9 @@ export default {
           count: getters.totalForms,
           icon: "mdi-view-dashboard-outline",
           color: {
+            palette: "primary",
             name: "primary",
-            hash: "#4849a1",
-            rgba: "rgba(72, 73, 161, 0.75)",
+            rgba: "rgba(72, 73, 161, 0.8)",
           },
         },
         {
@@ -1242,9 +1242,9 @@ export default {
           count: getters.publishedForms,
           icon: "eva-external-link-outline",
           color: {
+            palette: "tertiary",
             name: "tertiary",
-            hash: "#25ccc9",
-            rgba: "rgba(37, 204, 201, 0.75)",
+            rgba: "rgba(37, 204, 201, 0.8)",
           },
         },
         {
@@ -1253,9 +1253,9 @@ export default {
           count: getters.draftedForms,
           icon: "mdi-text-box-outline",
           color: {
+            palette: "secondary",
             name: "secondary",
-            hash: "#f97767",
-            rgba: "rgba(249, 119, 103, 0.75)",
+            rgba: "rgba(249, 119, 103, 0.8)",
           },
         },
         {
@@ -1264,9 +1264,9 @@ export default {
           count: getters.archivedForms,
           icon: "eva-archive-outline",
           color: {
+            palette: "blue",
             name: "blue-5",
-            hash: "#42a5f5",
-            rgba: "rgba(66, 165, 245, 0.75)",
+            rgba: "rgba(66, 165, 245, 0.8)",
           },
         },
         {
@@ -1275,9 +1275,9 @@ export default {
           count: getters.trashedForms,
           icon: "eva-trash-2-outline",
           color: {
+            palette: "pink",
             name: "pink-5",
-            hash: "#ec407a",
-            rgba: "rgba(236, 64, 122, 0.75)",
+            rgba: "rgba(236, 64, 122, 0.8)",
           },
         },
         {
@@ -1286,9 +1286,9 @@ export default {
           count: getters.favouriteForms,
           icon: "eva-star-outline",
           color: {
+            palette: "amber",
             name: "amber-6",
-            hash: "#ffc107",
-            rgba: "rgba(255, 193, 7, 0.75)",
+            rgba: "rgba(255, 193, 7, 0.8)",
           },
         },
       ];

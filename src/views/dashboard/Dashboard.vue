@@ -1,30 +1,32 @@
 <template>
   <AppLayout>
     <template #page-content>
-      <div class="container">
-        <!-- header -->
+      <BaseScrollbar height="calc(100vh - 57px)">
+        <div class="container">
+          <!-- header -->
 
-        <div class="q-mb-lg">
-          <div class="title">Welcome Amelia,</div>
-          <div class="subtitle q-mt-xs">
-            Here is your forms & submissions summary
+          <div class="q-mb-lg">
+            <div class="title">Welcome Amelia,</div>
+            <div class="subtitle q-mt-xs">
+              Here is your forms & submissions summary
+            </div>
           </div>
+
+          <!-- ... -->
+
+          <!-- status widgets -->
+
+          <StatusWidgets />
+
+          <!-- ... -->
+
+          <!-- submission widgets -->
+
+          <SubmissionWidget />
+
+          <!-- ... -->
         </div>
-
-        <!-- ... -->
-
-        <!-- status widget -->
-
-        <StatusWidgets />
-
-        <!-- ... -->
-
-        <!-- ... -->
-
-        <SubmissionWidget class="q-mt-lg" />
-
-        <!-- ... -->
-      </div>
+      </BaseScrollbar>
     </template>
   </AppLayout>
 </template>

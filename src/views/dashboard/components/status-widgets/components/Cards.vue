@@ -44,10 +44,11 @@ export default {
 .cards {
   display: flex;
   align-items: center;
+  margin-bottom: 24px;
 
   .card {
     background-color: white;
-    border-radius: 0px 16px 16px 16px;
+    border-radius: 16px;
     border: 1px solid $gray-2;
     box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
     padding: 16px 24px;

@@ -1,25 +1,26 @@
 <template>
   <div class="submission-widgets">
-    <RankChart />
-
     <LineChart />
+
+    <SubmissionPieChart />
   </div>
 </template>
 
 <script>
-import RankChart from "./components/RankChart.vue";
+import SubmissionPieChart from "./components/SubmissionPieChart.vue";
 import LineChart from "./components/LineChart.vue";
 
 export default {
   name: "SubmissionWidgets",
 
-  components: { RankChart, LineChart },
+  components: { SubmissionPieChart, LineChart },
 };
 </script>
 
 <style lang="scss" scoped>
 .submission-widgets {
+  margin-top: 24px;
   display: flex;
-  height: 360px;
+  height: 298px;
 }
 </style>

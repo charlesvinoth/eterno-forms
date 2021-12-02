@@ -6,30 +6,14 @@
 
     <!-- ... -->
 
-    <!-- chart -->
+    <!-- charts -->
 
-    <div class="chart-wrapper">
-      <div class="chart">
-        <Tiles />
+    <div class="charts">
+      <StatusPieChart />
 
-        <BarChart />
+      <StatusBarChart />
 
-        <PieChart name="statusChart" :stats="statusChartData" class="q-mr-md">
-          <template #count>{{ stats[0].count }}</template>
-          <template #label>Total Forms</template>
-        </PieChart>
-
-        <PieChart
-          name="favouriteChart"
-          :stats="favouriteChartData"
-          class="hidden"
-        >
-          <template #count>{{ stats[5].count }}</template>
-          <template #label>Favourite Forms</template>
-        </PieChart>
-      </div>
-
-      <div class="floating-label">Form Statistics</div>
+      <FavouritePieChart />
     </div>
 
     <!-- ... -->
@@ -37,66 +21,22 @@
 </template>
 
 <script>
-import { cloneDeep } from "lodash-es";
-
-import { mapGetters } from "vuex";
-
 import Cards from "./components/Cards.vue";
-import Tiles from "./components/Tiles.vue";
-import BarChart from "./components/BarChart.vue";
-import PieChart from "./components/PieChart.vue";
+import FavouritePieChart from "./components/FavouritePieChart.vue";
+import StatusBarChart from "./components/StatusBarChart.vue";
+import StatusPieChart from "./components/StatusPieChart.vue";
 
 export default {
   name: "StatusWidgets",
 
-  components: { Cards, Tiles, BarChart, PieChart },
-
-  computed: {
-    ...mapGetters("forms", ["stats"]),
-
-    statusChartData() {
-      return [this.stats[1], this.stats[2], this.stats[3], this.stats[4]];
-    },
-
-    favouriteChartData() {
-      const totalForms = cloneDeep(this.stats[0]);
-      const favouriteForms = this.stats[5];
-
-      totalForms.count = totalForms.count - favouriteForms.count;
-      totalForms.label = "not favourite";
-
-      return [totalForms, favouriteForms];
-    },
-  },
+  components: { Cards, FavouritePieChart, StatusBarChart, StatusPieChart },
 };
 </script>
 
 <style lang="scss" scoped>
 .status-widget {
-  .chart-wrapper {
-    position: relative;
-
-    .chart {
-      background-color: white;
-      border: 1px solid $gray-2;
-      border-radius: 24px;
-      box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
-      padding: 24px 24px 36px 24px;
-      display: flex;
-      align-items: center;
-      margin-top: 24px;
-      height: 240px;
-    }
-
-    .floating-label {
-      color: $gray-5;
-      font-size: 12px;
-      position: absolute;
-      right: 24px;
-      bottom: 12px;
-      width: 396px;
-      text-align: center;
-    }
+  .charts {
+    display: flex;
   }
 }
 </style>
