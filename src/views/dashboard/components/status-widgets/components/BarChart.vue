@@ -1,5 +1,5 @@
 <template>
-  <div class="line-chart">
+  <div class="bar-chart">
     <!-- axes -->
 
     <div class="axes">
@@ -40,7 +40,7 @@ import { cloneDeep } from "lodash-es";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "LineChart",
+  name: "BarChart",
 
   data() {
     return {
@@ -60,6 +60,7 @@ export default {
       handler() {
         const stats = cloneDeep(this.stats);
         stats.shift(); // remove the first element, since it is not needed
+        stats.pop();
 
         stats.forEach((stat) => (stat.width = "0px"));
         this.bars = stats;
@@ -88,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.line-chart {
+.bar-chart {
   flex: 1;
   height: 100%;
   margin: 0px 36px;
@@ -132,14 +133,12 @@ export default {
         height: 16px;
         width: 2px;
         border-radius: 4px;
-        background-color: currentColor;
-        opacity: 0.5;
+        background-color: $gray-2;
       }
 
       .bar {
         height: 8px;
-        background-color: currentColor;
-        opacity: 0.5;
+        background-color: $gray-2;
         transition: all 0.3s ease;
       }
 

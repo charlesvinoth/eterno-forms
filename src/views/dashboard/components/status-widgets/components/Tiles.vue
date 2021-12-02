@@ -23,6 +23,7 @@ export default {
 
       const stats = [...this.stats];
       stats.shift();
+      stats.pop();
 
       return stats;
     },
@@ -40,10 +41,10 @@ export default {
 
   .tile {
     height: 36px;
-    width: 180px;
+    width: 120px;
     padding: 8px 16px;
-    background-color: $gray-1;
-    border: 1px solid $gray-2;
+    // background-color: $gray-1;
+    // border: 1px solid $gray-2;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -57,8 +58,9 @@ export default {
     }
 
     .name {
-      color: $gray;
-      font-size: 14px;
+      color: $gray-5;
+      font-size: 13px;
+      font-weight: 500;
       text-transform: capitalize;
       margin-left: 8px;
     }

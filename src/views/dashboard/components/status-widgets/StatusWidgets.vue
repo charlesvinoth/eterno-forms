@@ -12,14 +12,18 @@
       <div class="chart">
         <Tiles />
 
-        <LineChart />
+        <BarChart />
 
         <PieChart name="statusChart" :stats="statusChartData" class="q-mr-md">
           <template #count>{{ stats[0].count }}</template>
           <template #label>Total Forms</template>
         </PieChart>
 
-        <PieChart name="favouriteChart" :stats="favouriteChartData">
+        <PieChart
+          name="favouriteChart"
+          :stats="favouriteChartData"
+          class="hidden"
+        >
           <template #count>{{ stats[5].count }}</template>
           <template #label>Favourite Forms</template>
         </PieChart>
@@ -39,13 +43,13 @@ import { mapGetters } from "vuex";
 
 import Cards from "./components/Cards.vue";
 import Tiles from "./components/Tiles.vue";
-import LineChart from "./components/LineChart.vue";
+import BarChart from "./components/BarChart.vue";
 import PieChart from "./components/PieChart.vue";
 
 export default {
-  name: "StatusWidget",
+  name: "StatusWidgets",
 
-  components: { Cards, Tiles, LineChart, PieChart },
+  components: { Cards, Tiles, BarChart, PieChart },
 
   computed: {
     ...mapGetters("forms", ["stats"]),
@@ -81,7 +85,7 @@ export default {
       display: flex;
       align-items: center;
       margin-top: 24px;
-      height: 260px;
+      height: 240px;
     }
 
     .floating-label {

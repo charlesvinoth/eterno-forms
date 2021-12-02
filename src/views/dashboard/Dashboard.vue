@@ -15,7 +15,13 @@
 
         <!-- status widget -->
 
-        <StatusWidget />
+        <StatusWidgets />
+
+        <!-- ... -->
+
+        <!-- ... -->
+
+        <SubmissionWidget class="q-mt-lg" />
 
         <!-- ... -->
       </div>
@@ -26,12 +32,13 @@
 <script>
 import AppLayout from "@/layouts/app/AppLayout.vue";
 
-import StatusWidget from "./components/status-widgets/StatusWidget.vue";
+import StatusWidgets from "./components/status-widgets/StatusWidgets.vue";
+import SubmissionWidget from "./components/submission-widgets/SubmissionWidgets.vue";
 
 export default {
   name: "Dashboard",
 
-  components: { AppLayout, StatusWidget },
+  components: { AppLayout, StatusWidgets, SubmissionWidget },
 };
 </script>
 
