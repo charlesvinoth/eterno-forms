@@ -1,26 +1,33 @@
 <template>
   <div class="submission-widgets">
-    <LineChart />
+    <SubmissionBarChart />
 
     <SubmissionPieChart />
+
+    <SubmissionPercentageChart />
   </div>
 </template>
 
 <script>
 import SubmissionPieChart from "./components/SubmissionPieChart.vue";
-import LineChart from "./components/LineChart.vue";
+import SubmissionBarChart from "./components/SubmissionBarChart.vue";
+import SubmissionPercentageChart from "./components/SubmissionPercentageChart.vue";
 
 export default {
   name: "SubmissionWidgets",
 
-  components: { SubmissionPieChart, LineChart },
+  components: {
+    SubmissionPieChart,
+    SubmissionBarChart,
+    SubmissionPercentageChart,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .submission-widgets {
-  margin-top: 24px;
   display: flex;
-  height: 298px;
+  margin-top: 24px;
+  height: 484px;
 }
 </style>

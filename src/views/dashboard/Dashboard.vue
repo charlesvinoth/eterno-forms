@@ -7,8 +7,8 @@
 
           <div class="q-mb-lg">
             <div class="title">Welcome Amelia,</div>
-            <div class="subtitle q-mt-xs">
-              Here is your forms & submissions summary
+            <div class="subtitle">
+              Here is your Forms and Submissions overview
             </div>
           </div>
 
@@ -46,6 +46,6 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  padding: 16px;
+  padding: 24px;
 }
 </style>

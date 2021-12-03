@@ -1,5 +1,7 @@
 <template>
   <div class="submission-pie-chart">
+    <div class="title">Submissions by Region</div>
+
     <!-- chart -->
 
     <div class="chart-wrapper">
@@ -23,17 +25,6 @@
         <Legend :label="legend.label" :color="legend.color.palette" />
 
         <q-space />
-
-        <!-- <q-circular-progress
-          :value="percentage(legend.count)"
-          size="36px"
-          show-value
-          :color="legend.color.palette"
-          track-color="gray-2"
-          class="text-gray-10 text-weight-bold"
-        >
-          {{ percentage(legend.count) }}%
-        </q-circular-progress> -->
 
         <div class="percent">{{ percentage(legend.count) }}%</div>
       </div>
@@ -78,16 +69,6 @@ export default {
         },
         {
           id: this.$nano.id(),
-          label: "china",
-          count: 69,
-          color: {
-            palette: "blue",
-            name: "blue-5",
-            rgba: "rgba(66, 165, 245, 0.8)",
-          },
-        },
-        {
-          id: this.$nano.id(),
           label: "russia",
           count: 73,
           color: {
@@ -99,7 +80,7 @@ export default {
         {
           id: this.$nano.id(),
           label: "others",
-          count: 229,
+          count: 298,
           color: {
             palette: "primary",
             name: "primary",
@@ -174,19 +155,25 @@ export default {
 
 <style lang="scss" scoped>
 .submission-pie-chart {
-  margin-left: 16px;
   background-color: white;
   border: 1px solid $gray-2;
   border-radius: 24px;
   box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
   padding: 24px;
   display: flex;
+  flex-direction: column;
+
+  .title {
+    color: $gray-8;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
 
   .chart-wrapper {
     width: 200px;
     height: 200px;
     position: relative;
-    margin: auto;
 
     .info {
       position: absolute;
@@ -214,15 +201,13 @@ export default {
 
   .legends {
     flex: 1;
-    margin-left: 24px;
+    margin-top: 24px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    width: 224px;
+    justify-content: space-between;
 
     .legend {
       border-radius: 4px;
-      padding: 4px;
       display: flex;
       align-items: center;
     }

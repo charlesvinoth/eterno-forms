@@ -29,7 +29,7 @@
             v-for="bar in _stats"
             :key="bar.id"
             class="bar-wrapper"
-            :class="`text-${bar.color.name}`"
+            :style="{ color: bar.color.rgba }"
           >
             <div class="bar" :style="{ width: width(bar.count) }"></div>
 
@@ -70,24 +70,12 @@ export default {
 
       return stats;
     },
-
-    labels() {
-      return this._stats.map((stat) => stat.label);
-    },
-
-    count() {
-      return this._stats.map((stat) => stat.count);
-    },
-
-    color() {
-      return this._stats.map((stat) => stat.color.rgba);
-    },
   },
 
   methods: {
     width(count) {
       const width = Math.floor((count * 100) / this.stats[0].count);
-      return `calc(${width}% - 32px)`; // substract 32px to take the count circle into the account
+      return `calc(${width}% - 28px)`; // substract 28px to take the count circle into the account
     },
   },
 };
@@ -116,6 +104,8 @@ export default {
         color: $gray-5;
         font-size: 12px;
         text-transform: capitalize;
+        width: 54px;
+        text-align: right;
       }
     }
 
@@ -168,8 +158,8 @@ export default {
           }
 
           .count {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             background-color: currentColor;
             border-radius: 100%;
             display: flex;
